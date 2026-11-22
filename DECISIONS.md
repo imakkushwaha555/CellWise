@@ -176,3 +176,57 @@
   [GitHub artifact attestations](https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations),
   [Windows 2025 runner image](https://github.com/actions/runner-images/blob/main/images/windows/Windows2025-Readme.md),
   and [NSIS 3.13 download](https://nsis.sourceforge.io/Download).
+
+## Phase F: Discoverability and documentation (prepared, not published)
+
+- **Product comparison:** Microsoft's official Word `Selection.InsertFormula` reference says that
+  Word's built-in formula field accepts spreadsheet-style table-cell references (for example
+  `=SUM(A4:C4)`) and can use positional expressions such as `SUM(ABOVE)` or `SUM(LEFT)`. The
+  discovery brief's implication that Word requires helper A/B/C and 1/2/3 labels is not accurate
+  for explicitly referenced formulas. README and site copy describe Cellwise as a separate
+  task-pane workflow, not as the only way to use A1 references.
+- **Source:** https://learn.microsoft.com/en-us/office/vba/api/word.selection.insertformula
+- **Static docs:** Chose plain HTML/CSS and Node built-ins; no framework or dependency was added.
+  The Pages build emits five SEO-described HTML pages, JSON-LD, sitemap, robots rules, and the
+  built task-pane files. It requires a real `cellwise` GitHub owner URL and refuses to replace an
+  unmarked `_site` directory. Only a synthetic owner was used in local validation.
+- **Privacy and hosting:** GitHub Pages is prepared but not enabled. It will host downloadable
+  add-in code and documentation; project code does not upload document contents. Publishing,
+  repository creation, site enablement, and metadata settings remain owner actions.
+- **Visuals:** Created original Cellwise social-preview assets at 1280 x 640 and a separate
+  illustrative formula diagram. The diagram is explicitly not a live Word screenshot. Real
+  Word screenshots/recordings are deferred until live Word testing. A local documentation
+  walkthrough was recorded; it demonstrates only the static documentation site.
+- **Community preparation:** Added contribution, conduct, security, issue/PR templates, nine local
+  issue drafts, a roadmap issue draft, citation/Zenodo guidance, and non-posted outreach drafts.
+  No GitHub issues, labels, Discussions, or submissions were created.
+- **Submission research:** Hacker News Show HN requirements were checked on its official page.
+  Reddit rules pages could not be retrieved, so the drafts explicitly require manual rule and
+  moderator checks. The Office.js curated list found is MIT but last pushed in 2023 and has no
+  contribution guide; a broader Office 365 list has no declared license and is stale. Neither is
+  recommended for submission without maintainer confirmation.
+- **Distribution drafts:** Added clearly marked, non-valid winget, Scoop, and Chocolatey templates.
+  They are not submit-ready because the production install route, owner URL, and real release hash
+  are unavailable.
+- **Verification:** `npm run test`, `npm run typecheck`, `npm run validate`, `npm run pages:build`
+  with synthetic HTTPS values, and `git diff --check` passed during Phase F. The site output is
+  ignored and local only; GitHub Actions and real Pages deployment are unverified.
+
+## Phase G: Release gate (not cleared)
+
+- **History cleanup:** With the user's approval, used the verified MIT-licensed `git-filter-repo`
+  2.47.0 tool to replace personal Windows and Unix profile/workspace paths throughout all local
+  refs. All local commit IDs changed. The path scan found no matches in 20 reachable refs or 43
+  unique reachable commits.
+- **Secret scan:** Gitleaks 8.30.1 was downloaded from the official release and its SHA-256 matched
+  the published asset digest. It reported no secrets when each of the 20 refs was scanned separately,
+  covering all 43 unique reachable commits, or in the current worktree.
+- **Recovery copies:** Three verified pre-rewrite Git bundles remain in the operating-system
+  temporary directory, outside the repository. They preserve the old history and must not be
+  published; retain them until the rewritten history has been independently accepted.
+- **Release blockers:** There is no configured Git remote or confirmed repository owner, no release
+  tag, and no GitHub CI/Pages run. MSI remains deferred, the UNC catalog installer is testing-only,
+  and live Word/Windows VM checks remain human tasks. No push, tag, deployment, or release has been
+  performed.
+- **Approval gate:** Do not publish or deploy until the remaining blockers are resolved and the user
+  gives the exact `approve release` instruction.

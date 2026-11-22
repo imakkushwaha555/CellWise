@@ -113,3 +113,39 @@
   intentionally refuses to release if hosted taskpane resources are unavailable or the tag does
   not match `package.json`.
 - **Deferred:** MSI remains deferred. No tag, remote, release, or deployment was created.
+
+## Phase F: Discoverability and documentation
+
+- **Implemented locally:** Reworked the README, added a plain HTML/CSS Pages site and tutorials,
+  original social-preview and formula illustrations, SEO metadata, sitemap/robots files, community
+  and contribution templates, issue/outreach drafts, distribution templates, citation guidance,
+  and CI/Pages workflows. No GitHub repository settings, issues, labels, Discussions, or submissions
+  were changed or created.
+- **Accuracy correction:** Microsoft's built-in Word formula field already accepts spreadsheet-style
+  references and positional formulas. README and site comparison text now describe Cellwise as a
+  separate task-pane workflow, not the only way to use A1 references.
+- **Verified locally:** `npm run test`, `npm run typecheck`, `npm run validate`,
+  `node scripts/check-version.mjs`, and `npm run pages:build` with synthetic HTTPS URLs passed.
+  The license gate passed for 51 SBOM components. `npm audit --audit-level=high` exited successfully;
+  one moderate esbuild advisory remains. The social preview is 1280 x 640.
+- **Visual QA:** A local documentation walkthrough navigated the landing page, sum tutorial,
+  A1-addressing guide, and formula comparison page. It is not a live Word demo.
+- **Unverified:** GitHub CI, Pages deployment, live Word, clean Windows VM installation, and release
+  attestations have not run. Repository owner values remain placeholders. No commit was made.
+
+## Phase G: Release gate preparation
+
+- **Checklist:** Added `RELEASE_CHECKLIST.md` with automated, agent-verified, and needs-human
+  evidence. The release is not ready: no Git remote, owner URL, tag, or release exists; MSI remains
+  deferred; and the UNC-catalog installer is testing-only.
+- **History cleanup:** With the user's approval, rewrote all local refs using the verified
+  `git-filter-repo` 2.47.0 tool. Gitleaks 8.30.1 (MIT; release digest verified) found no secrets
+  across all 20 refs covering 43 unique reachable commits, or in the current worktree. A separate
+  scan found no personal-path matches in reachable history or project files. Commit IDs changed.
+  Three pre-rewrite recovery bundles remain outside the repository and must not be published.
+- **Validation after rewrite:** `npm run test`, `npm run typecheck`, `npm run validate`,
+  `node scripts/check-version.mjs`, `npm run pages:build` with synthetic HTTPS URLs, and
+  `git diff --check` passed.
+- **Next:** Confirm repository ownership and URLs, obtain human live Word/Windows VM validation,
+  and resolve the MSI/production-installation blockers. Wait for the exact `approve release`
+  instruction before any push, tag publication, Pages deployment, or GitHub release.

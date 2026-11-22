@@ -1,4 +1,4 @@
-// Dependency-free Excel-style formula evaluator (A1 refs, ranges, basic functions).
+// Dependency-free A1-style formula evaluator (references, ranges, basic functions).
 // Original code, no third-party sources.
 
 export type Grid = (number | null)[][]; // numeric view of the table, null = empty/non-numeric
@@ -16,6 +16,18 @@ export function indexToCol(i: number): string {
 }
 
 export const addressOf = (row: number, col: number) => `${indexToCol(col)}${row + 1}`;
+
+export function parseAddress(address: string): { row: number; col: number } {
+  const match = /^([A-Za-z]+)([1-9]\d*)$/.exec(address);
+  if (!match) throw new Error(`Invalid cell address '${address}'`);
+
+  const col = colToIndex(match[1]);
+  const row = Number(match[2]) - 1;
+  if (!Number.isSafeInteger(col) || col < 0 || !Number.isSafeInteger(row)) {
+    throw new Error(`Invalid cell address '${address}'`);
+  }
+  return { row, col };
+}
 
 type Tok = { t: "num" | "ref" | "range" | "id" | "op" | "("  | ")" | ","; v: string };
 

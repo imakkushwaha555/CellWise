@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title">
+  <title id="title">Cellwise grid mark</title>
+  <rect width="240" height="240" rx="38" fill="#2f2343"/>
+  <g fill="#a9e2d0">
+    <rect x="38" y="38" width="46" height="46" rx="8"/>
+    <rect x="97" y="38" width="46" height="46" rx="8"/>
+    <rect x="156" y="38" width="46" height="46" rx="8"/>
+    <rect x="38" y="97" width="46" height="46" rx="8"/>
+    <rect x="156" y="97" width="46" height="46" rx="8"/>
+    <rect x="38" y="156" width="46" height="46" rx="8"/>
+    <rect x="97" y="156" width="46" height="46" rx="8"/>
+    <rect x="156" y="156" width="46" height="46" rx="8"/>
+  </g>
+  <rect x="97" y="97" width="46" height="46" rx="8" fill="#f4bd67"/>
+</svg>

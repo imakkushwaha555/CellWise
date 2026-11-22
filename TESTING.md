@@ -1,9 +1,10 @@
-# Testing Checklist
+# Cellwise Testing Checklist
 
 ## Prerequisites
 
 - Node.js v22 installed
-- Microsoft Word (desktop version 2016+ or Word on the web) with add-in sideloading enabled
+- A supported Microsoft Word desktop or web host with add-in sideloading enabled. Not affiliated
+  with or endorsed by Microsoft.
 
 ## Manual Sideload Steps
 
@@ -13,13 +14,13 @@
    ```
    This installs local dev certificates under `%USERPROFILE%\.office-addin-dev-certs`.
 
-2. Build the add-in:
+2. Build the add-in and original icons:
    ```bash
    npm run build
    ```
    This produces `dist/taskpane.js`, `dist/taskpane.html`, and icons in `dist/`.
 
-3. In Word, open the file `manifest.xml` in the Visual Studio Add-ins dialog, or:
+3. In the host, upload `manifest.xml` using:
    - Go to **Insert > My Add-ins > Upload My Add-in**
    - Select the built `manifest.xml`
    - Click **Add** / **Trust**
@@ -79,11 +80,6 @@ Formula              | Expected result
 | Non-table document                     | Status: "Place the cursor inside a table."                                 |
 | Merged cell with formula                 | Status: "Merged cells not supported; apply formula to a single cell."      |
 | Formula with unsupported function      | Error: `#ERR` or status message referencing unknown function               |
-
-### 6. Stop / Disable Auto-Recalculate
-
-- Currently the add-in recalculates on each selection change.
-- If you prefer manual recalculation, avoid clicking **Recalculate table**; formulas persist as stored text.
 
 ## Troubleshooting
 

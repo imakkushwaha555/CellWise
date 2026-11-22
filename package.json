@@ -1,7 +1,23 @@
 {
-  "name": "word-table-formulas",
+  "name": "cellwise",
   "version": "0.1.0",
-  "description": "Excel-style A1 formulas for Word tables, with no helper rows or columns.",
+  "description": "Local A1 formulas for document tables, with no helper rows or columns.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OWNER/cellwise.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OWNER/cellwise/issues"
+  },
+  "homepage": "https://github.com/OWNER/cellwise#readme",
+  "keywords": [
+    "word-addin",
+    "office-js",
+    "table-formulas",
+    "spreadsheet",
+    "a1-notation"
+  ],
+  "author": "Your Name (placeholder)",
   "license": "MIT",
   "private": true,
   "type": "module",

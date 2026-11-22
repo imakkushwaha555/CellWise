@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
+<title>Cellwise</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
 <style>
@@ -10,10 +11,12 @@
  small{color:#666}
 </style></head>
 <body>
+ <h1>Cellwise</h1>
  <div>Selected cell: <span id="addr">—</span></div>
  <input id="formula" placeholder="=SUM(B2:B5)  or  =C2*D2">
  <button id="apply">Apply</button><button id="recalc">Recalculate table</button>
  <div id="status"></div>
  <p><small>Functions: SUM, AVERAGE, MIN, MAX, COUNT, ABS, ROUND. Operators: + - * / ^ %</small></p>
+ <footer><small>Not affiliated with or endorsed by Microsoft.</small></footer>
  <script src="taskpane.js"></script>
 </body></html>

@@ -1,17 +1,36 @@
-# Licensing & legal safeguards (engineering notes, not legal advice)
+# Licensing and legal safeguards
 
-1. **Official APIs only.** The add-in uses Office.js (the Microsoft-supported extension model).
-   No patching, hooking, or reverse engineering of Word; no use of undocumented internals.
-   It runs inside the user's own licensed Word and changes nothing about that license.
-2. **No Microsoft code or assets bundled.** office.js is loaded from Microsoft's CDN at runtime
-   per Microsoft's terms; do not copy it into the repo. Use your own icons/branding.
-3. **Own formula engine.** `src/formula.ts` is original, dependency-free code, so there are no
-   third-party license obligations. If you add libraries, stick to MIT/Apache-2.0 and keep a NOTICE file.
-4. **Naming/trademarks.** Don't use "Microsoft", "Word", or "Excel" as part of the product name or logo
-   (e.g. "Table Formulas for Word" is fine as a descriptive reference; "Word Excel Pro" is not).
-   Add a disclaimer: "Not affiliated with or endorsed by Microsoft."
-5. **Excel-like, not Excel.** Implement common spreadsheet semantics independently; don't copy
-   Microsoft documentation text or claim compatibility guarantees.
-6. **Distribution.** Publish via Microsoft AppSource (Partner Center agreement) or sideload/admin deploy.
-7. **Your own license.** Project is MIT by default; change as needed. Have a lawyer review before commercial release.
-8. **Privacy.** All calculation happens locally in the task pane; no document data leaves the machine.
+These are engineering constraints, not legal advice.
+
+1. **Licensed host is unaffected.** Cellwise runs as a task-pane add-in inside the user's existing
+   Microsoft Word host. It does not modify or replace the user's Word license. Not affiliated with
+   or endorsed by Microsoft.
+2. **Official documented APIs only.** Use documented Office.js APIs. Do not patch, hook, or reverse
+   engineer host behavior or rely on undocumented internals.
+3. **No Microsoft code or assets in the repository.** Load the Office.js library from its official
+   hosted script URL at runtime. Use original artwork and original project documentation.
+4. **Distinct product identity.** The product name is Cellwise. References to Microsoft Word or
+   spreadsheet conventions are descriptive only and must be accompanied by the disclaimer:
+   "Not affiliated with or endorsed by Microsoft."
+5. **Independent formula implementation.** `src/formula.ts` is original and dependency-free.
+   Do not copy third-party formula engine code or documentation text. If a dependency is proposed,
+   verify its provenance and exact permissive license, update NOTICE, and record the rationale.
+6. **Privacy.** Calculations are local. Do not add telemetry or send document data to a network
+   service.
+7. **Distribution.** Sideload/admin deployment and public store distribution have separate
+   requirements. Do not submit to a store or make legal claims without review.
+8. **Project license.** MIT is the selected project license. Obtain qualified advice for questions
+   about trademark use, distribution, or legal obligations.
+
+## Phase A constraint evidence
+
+| Constraint | Evidence |
+|---|---|
+| Existing host license is unaffected | Uses the task-pane add-in model; no license modification. |
+| Official APIs only | Office.js runtime URL remains in `taskpane.html`; no host patching code. |
+| No Microsoft code/assets | Original logo and icons are under `assets/`; no Office.js bundle is checked in. |
+| Cellwise product naming | Package metadata, manifest display name, task-pane heading, and README use Cellwise. |
+| Local calculations | Formula engine is local; no telemetry or document-data network code added. |
+| A1 addressing | `src/formula.ts` and `src/formula.test.ts` cover required coordinates and reverse parsing. |
+
+This table records repository evidence only; it is not a legal review or live-host verification.

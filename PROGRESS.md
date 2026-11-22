@@ -4,7 +4,7 @@
 
 ### Status after this session
 
-- Repo classified as an existing scaffolded project (v0.1); no Git metadata present yet.
+- Repo classified as an existing scaffolded project (v0.1); Git metadata is present.
 
 - **Done (verified by actually running the commands):**
   - `npm install` completed (added dev deps: `office-addin-manifest`, `@types/node`).
@@ -27,3 +27,19 @@
   - `npm audit` still reports 1 moderate vulnerability (pre-existing, unrelated to this work).
 
 - **Next:** proceed to Step 2 (Word integration correctness / mock Word layer) once Step 1 checklist fully closed.
+
+## Phase A: Rename to Cellwise
+
+- **Status:** Implemented and automated checks passed; phase commit is the remaining operation.
+- Updated package metadata, lockfile root name, add-in manifest, task-pane title/heading/footer,
+  README, legal notes, testing notes, and source formula description.
+- Added the original SVG logo and build-generated 16/32/80 px PNG icons in `assets/`.
+- Added `parseAddress` and test assertions for A1, B3, AA1, and AB1 round trips.
+- **Tested:** `npm run test` passed, including formula and mock-client tests and all four A1-address round trips.
+- **Tested:** `npm run build` passed; generated icon files are 16x16, 32x32, and 80x80 pixels.
+- **Tested:** `npm run validate` passed against the updated manifest.
+- **Tested:** `node .\\node_modules\\typescript\\bin\\tsc --noEmit` passed.
+- **Tested:** recursive working-tree search for `table formulas` and `word-table-formulas` found no matches.
+- **Unverified:** Live desktop/web host behavior. See `TESTING.md` for manual steps and expected results.
+- **Not present:** No zip/archive existed in the repository to rename; release archive naming is deferred to Phase C.
+- **Next:** Commit the Phase A changes, then rename the workspace directory to `cellwise`.

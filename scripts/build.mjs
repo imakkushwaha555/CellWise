@@ -3,6 +3,7 @@ import { execSync } from 'child_process';
 import { mkdirSync } from 'fs';
 import { writeFileSync } from 'fs';
 import { deflateSync } from 'zlib';
+import { join } from 'path';
 
 function crc32(buf) {
   let c, table = [];
@@ -27,27 +28,35 @@ function chunk(type, data) {
 
 function makeIcon(size) {
   const pixels = Buffer.alloc(size * size * 4);
+  const background = [47, 35, 67];
+  const tile = [169, 226, 208];
+  const accent = [244, 189, 103];
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       const i = (y * size + x) * 4;
-      pixels[i] = 30 + Math.floor((x / size) * 40);
-      pixels[i + 1] = 60 + Math.floor((y / size) * 40);
-      pixels[i + 2] = 120 + Math.floor(((x + y) / (size * 2)) * 40);
+      pixels[i] = background[0];
+      pixels[i + 1] = background[1];
+      pixels[i + 2] = background[2];
       pixels[i + 3] = 255;
     }
   }
-  const cell = Math.floor(size / 4);
-  for (let y = cell; y < cell * 3; y++) {
-    for (let x = cell; x < cell * 3; x++) {
-      const i = (y * size + x) * 4;
-      pixels[i] = 255; pixels[i + 1] = 255; pixels[i + 2] = 255;
-    }
-  }
-  const inner = Math.floor(size / 8);
-  for (let y = cell + inner; y < cell * 3 - inner; y++) {
-    for (let x = cell + inner; x < cell * 3 - inner; x++) {
-      const i = (y * size + x) * 4;
-      pixels[i] = 0; pixels[i + 1] = 100; pixels[i + 2] = 180;
+  const margin = Math.floor(size / 6);
+  const gap = Math.max(1, Math.floor(size / 20));
+  const gridSize = size - margin * 2;
+  const cellSize = Math.floor((gridSize - gap * 2) / 3);
+  for (let row = 0; row < 3; row++) {
+    for (let col = 0; col < 3; col++) {
+      const x1 = margin + col * (cellSize + gap);
+      const y1 = margin + row * (cellSize + gap);
+      const color = row === 1 && col === 1 ? accent : tile;
+      for (let y = y1; y < Math.min(y1 + cellSize, size); y++) {
+        for (let x = x1; x < Math.min(x1 + cellSize, size); x++) {
+          const i = (y * size + x) * 4;
+          pixels[i] = color[0];
+          pixels[i + 1] = color[1];
+          pixels[i + 2] = color[2];
+        }
+      }
     }
   }
   const ihdr = Buffer.alloc(13);
@@ -69,9 +78,12 @@ function makeIcon(size) {
 }
 
 mkdirSync('dist', { recursive: true });
+mkdirSync('assets', { recursive: true });
 execSync('npx esbuild src/taskpane.ts --bundle --outfile=dist/taskpane.js', { stdio: 'inherit' });
 copyFileSync('taskpane.html', 'dist/taskpane.html');
 for (const size of [16, 32, 80]) {
-  writeFileSync(`dist/icon-${size}.png`, makeIcon(size));
+  const icon = makeIcon(size);
+  writeFileSync(join('assets', `icon-${size}.png`), icon);
+  writeFileSync(join('dist', `icon-${size}.png`), icon);
 }
 console.log('Build complete.');

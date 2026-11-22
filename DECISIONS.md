@@ -1,5 +1,22 @@
 # Decisions Log
 
+## Phase A: Rename to Cellwise
+
+- **Decision:** Rename the product, npm package, manifest display name, task pane, and user-facing
+  documentation to Cellwise.
+- **Rationale:** Establish the requested distinct product identity while keeping host references
+  descriptive and pairing them with the required disclaimer.
+- **Repository metadata:** The repository URL, support URL, and author are explicit placeholders
+  (`OWNER` / `Your Name`) because no Git remote or owner identity is configured. Replace them
+  before publication.
+- **Manifest identifier:** Generated a new UUID for this add-in manifest.
+- **Artwork:** Added an original grid logo and procedural raster icons using a purple, mint, and
+  amber palette. No Microsoft assets or icon library were used.
+- **Address parsing:** Added strict A1 `parseAddress` conversion to zero-based row/column indices
+  and round-trip tests for A1, B3, AA1, and AB1.
+- **Root folder/archive:** The workspace folder will be renamed to `cellwise` after validation.
+  No zip/archive existed in the repository at the start of this phase.
+
 ## Step 1: Environment and verification
 
 ### Build script migration (Node.js instead of shell commands)

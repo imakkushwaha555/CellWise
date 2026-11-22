@@ -154,3 +154,25 @@
   Windows VM/live Word install and installer runtime behavior remain unverified.
 - **Option 2:** Not selected. A local HTTPS server and locally trusted certificate add certificate
   trust and lifecycle risks; do not implement without a reviewed, user-approved design.
+
+## Phase E: Release engineering
+
+- **Release version:** User selected `1.0.0`, matching Office manifest `1.0.0.0` and installer
+  numeric version `1.0.0.0`; eventual tag is `v1.0.0`.
+- **MSI:** Deferred at the user's direction; the release workflow will produce the ZIP and NSIS EXE
+  only. No WiX tooling is added.
+- **CI:** Use GitHub-hosted `windows-2025`, PowerShell 7.6.10, Node.js 24.20.0, npm 11.19.0,
+  Chocolatey 2.7.5, NSIS 3.13.0, and GitHub CLI 2.104.0, with exact runtime checks. GitHub
+  Actions are pinned to commit SHAs in the workflow.
+- **SBOM/license gate:** Use npm's built-in CycloneDX SBOM generator, then fail on missing,
+  unknown, or non-allowlisted dependency licenses. The current locked graph reports permissive
+  licenses only; the two Blue Oak Model License dependencies were checked against the publisher's
+  published license. No new package dependency was introduced for SBOM or license analysis.
+- **Provenance:** Use GitHub artifact attestations with `id-token: write` and
+  `attestations: write`; preserve the Sigstore bundle alongside the release assets.
+- **Unverified:** The GitHub repository does not exist yet, so the workflow, release API, Pages
+  URL, and runner package installation have not run in CI.
+- **Sources:** [npm SBOM documentation](https://docs.npmjs.com/cli/v11/commands/npm-sbom),
+  [GitHub artifact attestations](https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations),
+  [Windows 2025 runner image](https://github.com/actions/runner-images/blob/main/images/windows/Windows2025-Readme.md),
+  and [NSIS 3.13 download](https://nsis.sourceforge.io/Download).

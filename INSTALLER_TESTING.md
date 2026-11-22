@@ -55,7 +55,7 @@ argument. The uninstaller supports NSIS's `/S` silent switch.
 - **Uninstall:** use **Apps & features** or the installed `Uninstall.exe`. It removes Cellwise's
   manifest, its own trusted-catalog registry key, its uninstall record, and its own local files.
   The share folder itself is user-owned and is not removed. If it is unavailable during uninstall,
-  the uninstaller reports the leftover manifest path.
+  the uninstaller warns that the manifest may remain and reports where to check.
 - No certificate or scheduled task is created. Office may cache add-in data; any remaining cached
   entry may require the documented Office cache-clearing steps.
 

@@ -1,9 +1,26 @@
 Cellwise is distributed under the MIT License. See LICENSE.
 
-Windows installer tool:
+Build and release tools (used only to build; not bundled in the add-in payload):
+- Node.js 24.20.0 (MIT): https://github.com/nodejs/node/blob/v24.20.0/LICENSE
+- npm 11.19.0 (Artistic-2.0): https://github.com/npm/cli/blob/v11.19.0/LICENSE
+- Chocolatey CLI 2.7.5 (Apache-2.0): https://github.com/chocolatey/choco/blob/develop/LICENSE
+- GitHub CLI 2.104.0 (MIT): https://github.com/cli/cli/blob/v2.104.0/LICENSE
+- PowerShell 7.6.10 (MIT): https://github.com/PowerShell/PowerShell/blob/v7.6.10/LICENSE.txt
+- `actions/checkout` v4 at `11d5960a326750d5838078e36cf38b85af677262` (MIT)
+- `actions/setup-node` v4 at `49933ea5288caeca8642d1e84afbd3f7d6820020` (MIT)
+- `actions/attest-build-provenance` v2 at `e8998f949152b193b063cb0ec769d69d929409be` (MIT)
+
+Installer tool:
 - NSIS 3.13 (https://nsis.sourceforge.io/), licensed under the zlib/libpng license
   for its core and zlib compressor. Cellwise selects NSIS's zlib compressor.
   The NSIS bzip2 and LZMA compressors are not selected.
+- CI installs the `nsis.install` Chocolatey package at version 3.13.0 and verifies `makensis`
+  reports v3.13.
+
+The locked npm dependency graph is included in each release's CycloneDX SBOM and generated
+`DEPENDENCY-LICENSES.txt`. At this revision, declared dependency licenses include Apache-2.0,
+Blue Oak Model License 1.0.0, BSD-2-Clause, BSD-3-Clause, ISC, and MIT. Blue Oak terms:
+https://blueoakcouncil.org/license/1.0.0. `node_modules` is not copied into the add-in ZIP.
 
 zlib/libpng license notice:
 Copyright (C) Jean-loup Gailly and Mark Adler

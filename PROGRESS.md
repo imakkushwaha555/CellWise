@@ -92,3 +92,24 @@
   Pages URL. Windows VM/live Word installation and installer runtime behavior remain unverified.
   `AGENT_BRIEF.md` is absent; project rules were read from `AGENTS.md`, `.ai/instructions.txt`,
   and available project documentation.
+
+## Phase E: Release engineering (prepared, not CI-verified)
+
+- **Implemented:** Added a tag-triggered Windows release workflow with pinned action SHAs and
+  checked PowerShell/Node.js/npm/Chocolatey/NSIS/GitHub CLI versions. It runs tests, type checking,
+  manifest validation, version consistency, `npm audit --audit-level=high`, packaging, host availability,
+  CycloneDX SBOM generation, an allowlist-based dependency license gate, SHA-256 checksums, and
+  GitHub build-provenance attestations before creating a release.
+- **Implemented:** Added `CHANGELOG.md`, `RELEASE_NOTES_TEMPLATE.md`, and scripts for version,
+  hosting, and license checks. The license gate was exercised against the current SBOM (51
+  dependency components) and a negative GPL test; it passed.
+- **Verified locally:** `npm run test`, `npm run typecheck`, `npm run validate`,
+  `node scripts/check-version.mjs`, npm SBOM/license validation, `npm audit --audit-level=high`,
+  and `npm run package` passed. The audit reports one existing **moderate** esbuild advisory;
+  no High/Critical advisory was reported. NSIS built the installer after the uninstall warning
+  fix; generated artifacts were deleted.
+- **Unverified:** GitHub Actions, GitHub Release, attestation publication, NSIS installation on the
+  hosted runner, and live Pages host checks cannot run until the repository exists. The workflow
+  intentionally refuses to release if hosted taskpane resources are unavailable or the tag does
+  not match `package.json`.
+- **Deferred:** MSI remains deferred. No tag, remote, release, or deployment was created.

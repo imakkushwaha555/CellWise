@@ -1,0 +1,143 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: windows-2025
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24.20.0
+          cache: npm
+
+      - name: Pin npm version
+        shell: pwsh
+        run: |
+          if ($PSVersionTable.PSVersion.ToString() -ne "7.6.10") {
+            throw "Expected PowerShell 7.6.10 on the Windows 2025 runner."
+          }
+          npm install --global npm@11.19.0
+          if ((npm --version) -ne "11.19.0") {
+            throw "Expected npm 11.19.0."
+          }
+
+      - name: Install pinned NSIS
+        shell: pwsh
+        run: |
+          if ((choco --version) -ne "2.7.5") {
+            throw "Expected Chocolatey 2.7.5 on the Windows 2025 runner."
+          }
+          choco install nsis.install --version=3.13.0 --yes --no-progress
+          $env:NSIS_HOME = "C:\Program Files (x86)\NSIS"
+          $version = (& "$env:NSIS_HOME\makensis.exe" /VERSION).Trim()
+          if ($version -ne "v3.13") {
+            throw "Expected NSIS v3.13; found $version."
+          }
+
+      - name: Check versions
+        id: version
+        shell: pwsh
+        run: |
+          node scripts/check-version.mjs
+          $version = (Get-Content package.json -Raw | ConvertFrom-Json).version
+          "value=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Test, type-check, validate, and audit
+        shell: pwsh
+        run: |
+          npm run test
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run typecheck
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run validate
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm audit --audit-level=high
+
+      - name: Build hosted package
+        shell: pwsh
+        run: |
+          $repository = $env:GITHUB_REPOSITORY.Split("/")
+          $env:CELLWISE_BASE_URL = "https://$($repository[0]).github.io/$($repository[1])"
+          $env:CELLWISE_REPOSITORY_URL = "https://github.com/$env:GITHUB_REPOSITORY"
+          $env:NSIS_HOME = "C:\Program Files (x86)\NSIS"
+          node scripts/check-host.mjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run package
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $exe = Get-Item "release\Cellwise-Setup-${{ steps.version.outputs.value }}.exe"
+          if ($exe.VersionInfo.FileVersion -ne "${{ steps.version.outputs.value }}" -or
+              $exe.VersionInfo.ProductVersion -ne "${{ steps.version.outputs.value }}") {
+            throw "Installer file/product version does not match package.json."
+          }
+
+      - name: Generate SBOM and enforce dependency licenses
+        shell: pwsh
+        run: |
+          npm sbom --sbom-format cyclonedx --sbom-type application > release\SBOM.cdx.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node scripts/check-licenses.mjs release\SBOM.cdx.json release\DEPENDENCY-LICENSES.txt
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Generate SHA-256 checksums
+        shell: pwsh
+        run: |
+          $files = Get-ChildItem release -File | Where-Object { $_.Name -ne "SHA256SUMS.txt" } | Sort-Object Name
+          $lines = foreach ($file in $files) {
+            $hash = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+            "$hash  $($file.Name)"
+          }
+          $lines | Set-Content -LiteralPath release\SHA256SUMS.txt -Encoding ascii
+
+      - name: Attest build provenance
+        id: attest
+        uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be # v2
+        with:
+          subject-path: |
+            release/Cellwise-Setup-${{ steps.version.outputs.value }}.exe
+            release/Cellwise-${{ steps.version.outputs.value }}.zip
+            release/SBOM.cdx.json
+            release/DEPENDENCY-LICENSES.txt
+            release/SHA256SUMS.txt
+
+      - name: Preserve the attestation bundle
+        shell: pwsh
+        env:
+          BUNDLE_PATH: ${{ steps.attest.outputs.bundle-path }}
+        run: Copy-Item -LiteralPath $env:BUNDLE_PATH -Destination release\provenance.sigstore.json
+
+      - name: Create GitHub Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $version = "${{ steps.version.outputs.value }}"
+          $ghVersion = (gh --version | Select-Object -First 1) -replace "^gh version ", ""
+          if ($ghVersion -ne "2.104.0") {
+            throw "Expected GitHub CLI 2.104.0; found $ghVersion."
+          }
+          gh release create "v$version" `
+            "release\Cellwise-Setup-$version.exe" `
+            "release\Cellwise-$version.zip" `
+            "release\SHA256SUMS.txt" `
+            "release\SBOM.cdx.json" `
+            "release\DEPENDENCY-LICENSES.txt" `
+            "release\provenance.sigstore.json" `
+            --verify-tag --title "Cellwise $version" --generate-notes

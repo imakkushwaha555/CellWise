@@ -24,7 +24,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "package": "node scripts/package.mjs",
-    "test": "node --experimental-strip-types src/formula.test.ts && node --experimental-strip-types src/wordClient.test.ts",
+    "test": "node --experimental-strip-types src/formula.test.ts && node --experimental-strip-types src/wordClient.test.ts && node scripts/check-licenses.test.mjs && node scripts/check-version.test.mjs",
     "typecheck": "npx tsc --noEmit",
     "certs": "npx office-addin-dev-certs install",
     "serve": "node scripts/serve.mjs",

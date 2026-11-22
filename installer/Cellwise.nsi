@@ -187,6 +187,8 @@ SectionEnd
 Section "Uninstall"
   ReadRegStr $CatalogUrl HKCU "${APP_KEY}" "CatalogUrl"
   StrCmp $CatalogUrl "" skip_manifest_delete
+  IfFileExists "$CatalogUrl\." catalog_share_available manifest_delete_failed
+  catalog_share_available:
   IfFileExists "$CatalogUrl\${CATALOG_MANIFEST}" 0 skip_manifest_delete
   ClearErrors
   Delete "$CatalogUrl\${CATALOG_MANIFEST}"
@@ -206,7 +208,7 @@ Section "Uninstall"
 
   manifest_delete_failed:
     IfSilent uninstall_share_warning
-    MessageBox MB_ICONEXCLAMATION|MB_OK "Cellwise could not remove its manifest from the network share. Remove ${CATALOG_MANIFEST} manually from $CatalogUrl."
+    MessageBox MB_ICONEXCLAMATION|MB_OK "Cellwise could not verify or remove its manifest from the network share. If the share is unavailable or read-only, check for ${CATALOG_MANIFEST} and remove it manually from $CatalogUrl."
     uninstall_share_warning:
     SetErrorLevel 1
     DeleteRegKey HKCU "${CATALOG_KEY}"

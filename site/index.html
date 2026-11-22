@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cellwise | A1 formulas for Word tables</title>
+  <meta name="description" content="Use Excel-style A1 cell references and local formulas in Word tables with Cellwise, an open-source add-in that needs no helper rows or columns.">
+  <link rel="canonical" href="{{BASE_URL}}/">
+  <meta property="og:title" content="Cellwise | A1 formulas for Word tables">
+  <meta property="og:description" content="Excel-style cell references for Word tables, calculated locally without helper rows or columns.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{BASE_URL}}/">
+  <meta property="og:image" content="{{BASE_URL}}/assets/social-preview.png">
+  <meta property="og:image:alt" content="Cellwise: A1 formulas for Word tables">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cellwise | A1 formulas for Word tables">
+  <meta name="twitter:description" content="Excel-style cell references for Word tables, calculated locally.">
+  <meta name="twitter:image" content="{{BASE_URL}}/assets/social-preview.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Cellwise","description":"An open-source Word add-in for local A1-style formulas in document tables.","applicationCategory":"BusinessApplication","softwareVersion":"1.0.0","license":"https://opensource.org/license/mit","url":"{{BASE_URL}}/","codeRepository":"{{REPOSITORY_URL}}"}
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header"><div class="wrap nav">
+    <a class="brand" href="./"><img src="assets/cellwise-logo.svg" alt="Cellwise grid mark">Cellwise</a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#features">Features</a><a href="#formulas">Formula guide</a><a href="#install">Install</a><a href="{{REPOSITORY_URL}}">Source code</a>
+    </nav>
+  </div></header>
+  <main class="wrap">
+    <section class="hero">
+      <p class="eyebrow">A1 formulas for Word tables</p>
+      <h1>Calculate table cells without helper rows or columns.</h1>
+      <p class="lead">Cellwise adds direct A1-style cell references and a small set of formulas to tables in Microsoft Word. Formula evaluation stays in the add-in.</p>
+      <div class="actions"><a class="button" href="sum-a-column.html">Learn to sum a column</a><a class="button secondary" href="{{REPOSITORY_URL}}">View the source</a></div>
+      <p class="notice"><strong>Testing status:</strong> live Word and clean Windows VM behavior have not been verified. The current installer uses a Microsoft-documented testing-only network-share catalog route; it is not a production installer.</p>
+    </section>
+    <figure>
+      <img src="assets/formula-example.svg" alt="Illustrative table with a total of 30 produced by =SUM(B2:B3); not a captured Word screen.">
+      <figcaption>Illustration only. It explains the addressing model and is not a screenshot or claim of a live calculation.</figcaption>
+    </figure>
+    <section id="features">
+      <h2>Why Cellwise</h2>
+      <p>Word already supports spreadsheet-style references in its built-in formula fields, and can also insert positional formulas such as <code>SUM(ABOVE)</code> or <code>SUM(LEFT)</code>. Cellwise offers a separate task-pane workflow for applying and recalculating its documented formula subset using table-relative addresses such as <code>B2</code>. Neither workflow requires visible column letters or row numbers. Cellwise is not a replacement for Excel or a promise of complete spreadsheet compatibility. See Microsoft's <a href="https://learn.microsoft.com/en-us/office/vba/api/word.selection.insertformula">Word formula-field reference</a>.</p>
+      <div class="grid">
+        <article class="card"><h3>Natural cell references</h3><p>Use <code>A1</code>, <code>B2</code>, <code>AA3</code>, or ranges such as <code>B2:B5</code>.</p></article>
+        <article class="card"><h3>Local calculation</h3><p>Cellwise has no telemetry. The add-in downloads from its configured host, but its code does not upload document contents to a Cellwise service.</p></article>
+        <article class="card"><h3>Small, independent engine</h3><p>Seven functions and common arithmetic operators are implemented in original TypeScript with no runtime package dependencies.</p></article>
+      </div>
+    </section>
+    <section id="formulas">
+      <h2>Formula reference</h2>
+      <div class="example"><table><thead><tr><th>Need</th><th>Example</th><th>Meaning</th></tr></thead><tbody>
+        <tr><td>Sum a range</td><td><code>=SUM(B2:B5)</code></td><td>Add numeric values in B2 through B5.</td></tr>
+        <tr><td>Average a range</td><td><code>=AVERAGE(A1:A4)</code></td><td>Average numeric values in A1 through A4.</td></tr>
+        <tr><td>Combine two cells</td><td><code>=A1+B1</code></td><td>Add the values in the first two cells.</td></tr>
+        <tr><td>Round a value</td><td><code>=ROUND(10/3,2)</code></td><td>Round the result to two decimal places.</td></tr>
+      </tbody></table></div>
+      <p>Functions: <code>SUM</code>, <code>AVERAGE</code>, <code>MIN</code>, <code>MAX</code>, <code>COUNT</code>, <code>ABS</code>, <code>ROUND</code>. Operators: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>^</code>, <code>%</code>.</p>
+    </section>
+    <section id="install">
+      <h2>Install for testing</h2>
+      <p>For local development, build and sideload the development manifest using the instructions in the repository. The Windows EXE is an unsigned testing prototype and requires an existing writable UNC share plus a hosted HTTPS add-in page. No MSI or production self-service installer is available.</p>
+      <p>Organizations can evaluate Microsoft 365 centralized deployment with an administrator. This is not a personal, no-admin install path.</p>
+    </section>
+    <section>
+      <h2>Frequently asked questions</h2>
+      <h3>How do I use Excel-style cell references in Word tables?</h3>
+      <p>Place the cursor in the destination cell, enter a formula such as <code>=A1+B1</code> or <code>=SUM(B2:B5)</code>, and choose Apply. A1 is the top-left cell of that table.</p>
+      <h3>How do I sum a column in a Word table?</h3>
+      <p>In the total cell, enter a range sum such as <code>=SUM(B2:B5)</code>, changing the range to match your table rows. See the <a href="sum-a-column.html">step-by-step guide</a>.</p>
+      <h3>Does Cellwise support every Excel formula?</h3>
+      <p>No. It supports the listed functions and operators only. It has no workbooks, named ranges, external data connections, or full Excel compatibility.</p>
+      <h3>Does my document content leave my computer?</h3>
+      <p>The Cellwise code contains no telemetry or document upload. The browser or Office host downloads the add-in files from the configured HTTPS host and loads Office.js from Microsoft's official URL.</p>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="wrap">
+    <p class="disclaimer">Not affiliated with or endorsed by Microsoft.</p>
+    <p>Cellwise is MIT-licensed. Word and Microsoft are referenced only to identify the host platform.</p>
+  </div></footer>
+</body>
+</html>

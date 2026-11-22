@@ -9,6 +9,10 @@ Build and release tools (used only to build; not bundled in the add-in payload):
 - `actions/checkout` v4 at `11d5960a326750d5838078e36cf38b85af677262` (MIT)
 - `actions/setup-node` v4 at `49933ea5288caeca8642d1e84afbd3f7d6820020` (MIT)
 - `actions/attest-build-provenance` v2 at `e8998f949152b193b063cb0ec769d69d929409be` (MIT)
+- `actions/configure-pages` v5 at `983d7736d9b0ae728b81ab479565c72886d7745b` (MIT)
+- `actions/upload-pages-artifact` v4 at `7b1f4a764d45c48632c6b24a0339c27f5614fb0b` (MIT)
+- `actions/deploy-pages` v4 at `d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e` (MIT)
+- `actions/upload-artifact` v4.6.2 at `ea165f8d65b6e75b540449e92b4886f43607fa02` (MIT; used by `upload-pages-artifact`)
 
 Installer tool:
 - NSIS 3.13 (https://nsis.sourceforge.io/), licensed under the zlib/libpng license

@@ -21,6 +21,7 @@ CLAUDE.md
 dist/
 node_modules/
 /release/
+/_site/
 
 # OS files
 Thumbs.db

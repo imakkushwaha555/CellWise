@@ -7,5 +7,9 @@
 - Added a ZIP package and an NSIS per-user installer prototype for testing with an existing UNC
   trusted catalog.
 - Added SHA-256, CycloneDX SBOM, dependency-license report, and build-provenance release automation.
+- Added a dependency-free Pages documentation site, formula tutorials, repository/community
+  setup drafts, and original social-preview artwork.
 - No MSI is included. The current Microsoft-documented UNC deployment route is testing-only and is
   not supported for production.
+- The formula diagram is an illustration, not a live Word screenshot; live host and clean-VM tests
+  remain pending.

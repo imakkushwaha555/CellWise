@@ -1,7 +1,7 @@
 {
   "name": "cellwise",
   "version": "1.0.0",
-  "description": "Local A1 formulas for document tables, with no helper rows or columns.",
+  "description": "Excel-style A1 formulas for Microsoft Word tables. Local-only open-source add-in; no helper rows or columns. Not affiliated with or endorsed by Microsoft.",
   "repository": {
     "type": "git",
     "url": "https://github.com/OWNER/cellwise.git"
@@ -13,9 +13,18 @@
   "keywords": [
     "word-addin",
     "office-js",
+    "office-addin",
+    "word-tables",
     "table-formulas",
     "spreadsheet",
-    "a1-notation"
+    "spreadsheet-formulas",
+    "a1-notation",
+    "formula-engine",
+    "typescript",
+    "open-source",
+    "mit-license",
+    "windows",
+    "productivity"
   ],
   "author": "Your Name (placeholder)",
   "license": "MIT",
@@ -24,11 +33,12 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "package": "node scripts/package.mjs",
-    "test": "node --experimental-strip-types src/formula.test.ts && node --experimental-strip-types src/wordClient.test.ts && node scripts/check-licenses.test.mjs && node scripts/check-version.test.mjs",
+    "test": "node --experimental-strip-types src/formula.test.ts && node --experimental-strip-types src/wordClient.test.ts && node scripts/check-licenses.test.mjs && node scripts/check-version.test.mjs && node scripts/check-pages.test.mjs",
     "typecheck": "npx tsc --noEmit",
     "certs": "npx office-addin-dev-certs install",
     "serve": "node scripts/serve.mjs",
-    "validate": "npx office-addin-manifest validate manifest.xml"
+    "validate": "npx office-addin-manifest validate manifest.xml",
+    "pages:build": "node scripts/generate-social-preview.mjs && node scripts/build.mjs && node scripts/build-pages.mjs"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sum a column in a Word table with A1 formulas | Cellwise</title>
+  <meta name="description" content="Learn the Cellwise steps for summing numeric cells in a Word table with an A1-style formula such as =SUM(B2:B5).">
+  <link rel="canonical" href="{{BASE_URL}}/sum-a-column.html">
+  <meta property="og:title" content="Sum a column in a Word table with A1 formulas">
+  <meta property="og:description" content="Use a range formula such as =SUM(B2:B5) in Cellwise, with no helper rows or columns.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="{{BASE_URL}}/sum-a-column.html">
+  <meta property="og:image" content="{{BASE_URL}}/assets/social-preview.png">
+  <meta property="og:image:alt" content="Cellwise A1 formula illustration">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sum a column in a Word table with A1 formulas">
+  <meta name="twitter:description" content="Use =SUM(B2:B5) in a Word table with Cellwise.">
+  <meta name="twitter:image" content="{{BASE_URL}}/assets/social-preview.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Cellwise","description":"An open-source Word add-in for local A1-style formulas in document tables.","applicationCategory":"BusinessApplication","softwareVersion":"1.0.0","license":"https://opensource.org/license/mit","url":"{{BASE_URL}}/sum-a-column.html","codeRepository":"{{REPOSITORY_URL}}"}
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header"><div class="wrap nav"><a class="brand" href="./"><img src="assets/cellwise-logo.svg" alt="Cellwise grid mark">Cellwise</a><nav class="nav-links" aria-label="Main navigation"><a href="./">Home</a><a href="averages.html">Averages</a><a href="cell-references.html">Cell references</a><a href="excel-like-formulas.html">Formula guide</a></nav></div></header>
+  <main class="wrap">
+    <p class="eyebrow">Tutorial</p>
+    <h1>Sum a column in a Word table</h1>
+    <p class="lead">Use an A1-style range formula such as <code>=SUM(B2:B5)</code> in the destination cell. Cellwise calculates locally and does not require visible helper labels.</p>
+    <p class="notice"><strong>Host test status:</strong> the steps describe the implemented add-in workflow, but live Word behavior has not yet been verified. Test first with a copy of a document.</p>
+    <h2>Steps</h2>
+    <ol>
+      <li>Use a Word table with numeric values in the column you want to total.</li>
+      <li>Click the cell where the total should appear.</li>
+      <li>In Cellwise, enter a formula such as <code>=SUM(B2:B5)</code>. Here, B2 through B5 are the cells to add; adjust the range for your table.</li>
+      <li>Choose <strong>Apply</strong>. The formula result is written in the selected cell.</li>
+      <li>After changing the input values, choose <strong>Recalculate table</strong>.</li>
+    </ol>
+    <h2>Example</h2>
+    <div class="example"><table><thead><tr><th>Row</th><th>Amount</th><th>Note</th></tr></thead><tbody><tr><td>2</td><td>12</td><td>First value</td></tr><tr><td>3</td><td>18</td><td>Second value</td></tr><tr><td>4</td><td>25</td><td>Third value</td></tr></tbody></table></div>
+    <p>To total the three displayed amounts, use <code>=SUM(B2:B4)</code> in the result cell. The example uses its first table row as row 1; therefore the first data row shown is row 2.</p>
+    <h2>Common issues</h2>
+    <ul>
+      <li>Make sure the formula starts with <code>=</code>.</li>
+      <li>Check that the range refers to the same table and includes only the intended data rows.</li>
+      <li>Cellwise supports numeric values and its documented function subset, not every Excel formula.</li>
+      <li>If the result is out of date, use <strong>Recalculate table</strong>.</li>
+    </ul>
+    <p>See also: <a href="cell-references.html">A1 cell references</a> and <a href="excel-like-formulas.html">supported functions</a>.</p>
+  </main>
+  <footer class="site-footer"><div class="wrap"><p class="disclaimer">Not affiliated with or endorsed by Microsoft.</p><p><a href="./">Cellwise home</a></p></div></footer>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Excel-like formulas in Word: Cellwise formula reference</title>
+  <meta name="description" content="See the A1 references, functions, operators, and limits supported by Cellwise for formula calculations in Word tables.">
+  <link rel="canonical" href="{{BASE_URL}}/excel-like-formulas.html">
+  <meta property="og:title" content="Excel-like formulas in Word: Cellwise formula reference">
+  <meta property="og:description" content="A focused, local formula subset for Word tables—not full Excel compatibility.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="{{BASE_URL}}/excel-like-formulas.html">
+  <meta property="og:image" content="{{BASE_URL}}/assets/social-preview.png">
+  <meta property="og:image:alt" content="Cellwise A1 formula illustration">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Excel-like formulas in Word: Cellwise formula reference">
+  <meta name="twitter:description" content="A focused, local formula subset for Word tables.">
+  <meta name="twitter:image" content="{{BASE_URL}}/assets/social-preview.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Cellwise","description":"An open-source Word add-in for local A1-style formulas in document tables.","applicationCategory":"BusinessApplication","softwareVersion":"1.0.0","license":"https://opensource.org/license/mit","url":"{{BASE_URL}}/excel-like-formulas.html","codeRepository":"{{REPOSITORY_URL}}"}
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header"><div class="wrap nav"><a class="brand" href="./"><img src="assets/cellwise-logo.svg" alt="Cellwise grid mark">Cellwise</a><nav class="nav-links" aria-label="Main navigation"><a href="./">Home</a><a href="sum-a-column.html">Sum a column</a><a href="averages.html">Averages</a><a href="cell-references.html">Cell references</a></nav></div></header>
+  <main class="wrap">
+    <p class="eyebrow">Formula reference</p>
+    <h1>Excel-like formulas in Word tables</h1>
+    <p class="lead">Cellwise provides A1-style references and a small independent formula engine for the current Word table. It is not a complete spreadsheet engine.</p>
+    <h2>Functions</h2>
+    <div class="example"><table><thead><tr><th>Function</th><th>Example</th><th>Purpose</th></tr></thead><tbody>
+      <tr><td><code>SUM</code></td><td><code>=SUM(A1:A4)</code></td><td>Add numeric values in a range.</td></tr>
+      <tr><td><code>AVERAGE</code></td><td><code>=AVERAGE(A1:A4)</code></td><td>Average numeric values in a range.</td></tr>
+      <tr><td><code>MIN</code> / <code>MAX</code></td><td><code>=MAX(A1:A4)</code></td><td>Return the lowest or highest supplied value.</td></tr>
+      <tr><td><code>COUNT</code></td><td><code>=COUNT(A1:A4)</code></td><td>Count numeric values supplied to the function.</td></tr>
+      <tr><td><code>ABS</code></td><td><code>=ABS(-4)</code></td><td>Return the absolute value.</td></tr>
+      <tr><td><code>ROUND</code></td><td><code>=ROUND(10/3,2)</code></td><td>Round to the requested number of decimal places.</td></tr>
+    </tbody></table></div>
+    <h2>Operators</h2>
+    <p>Cellwise supports addition (<code>+</code>), subtraction (<code>-</code>), multiplication (<code>*</code>), division (<code>/</code>), exponentiation (<code>^</code>), percentage (<code>%</code>), and parentheses.</p>
+    <h2>How it differs from Word's built-in table formulas</h2>
+    <p>Word's built-in formula field already accepts spreadsheet-style table-cell references (for example, <code>=SUM(A4:C4)</code>) and can insert positional expressions such as <code>=SUM(ABOVE)</code> or <code>=SUM(LEFT)</code> when a formula is omitted. Cellwise is a separate task-pane workflow that stores its formula text with the result and offers an explicit table-recalculation command. Its function set and behavior are limited and different; it does not add a capability that Word's built-in field lacks, replace those fields, or promise Excel compatibility. See Microsoft's <a href="https://learn.microsoft.com/en-us/office/vba/api/word.selection.insertformula">Word Selection.InsertFormula reference</a>.</p>
+    <p>Cellwise's formula engine and Word integration have automated tests, but real-host behavior has not yet been verified. See the repository's <a href="{{REPOSITORY_URL}}/blob/main/TESTING.md">test checklist</a>.</p>
+  </main>
+  <footer class="site-footer"><div class="wrap"><p class="disclaimer">Not affiliated with or endorsed by Microsoft.</p><p><a href="./">Cellwise home</a></p></div></footer>
+</body>
+</html>

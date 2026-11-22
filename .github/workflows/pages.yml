@@ -1,0 +1,70 @@
+name: Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24.20.0
+          cache: npm
+
+      - name: Pin npm version
+        run: |
+          npm install --global npm@11.19.0
+          test "$(npm --version)" = "11.19.0"
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Test and validate
+        run: |
+          npm run test
+          npm run typecheck
+          npm run validate
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+
+      - name: Build hosted site and add-in
+        env:
+          CELLWISE_BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+          CELLWISE_REPOSITORY_URL: https://github.com/${{ github.repository }}
+        run: npm run pages:build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

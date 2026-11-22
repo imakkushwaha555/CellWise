@@ -9,6 +9,7 @@
  button{padding:6px 10px;margin-right:6px}
  #addr{font-weight:600} #status{margin-top:10px} .err{color:#b00020}
  small{color:#666}
+ details{margin-top:14px} summary{cursor:pointer;font-weight:600}
 </style></head>
 <body>
  <h1>Cellwise</h1>
@@ -17,6 +18,12 @@
  <button id="apply">Apply</button><button id="recalc">Recalculate table</button>
  <div id="status"></div>
  <p><small>Functions: SUM, AVERAGE, MIN, MAX, COUNT, ABS, ROUND. Operators: + - * / ^ %</small></p>
+ <details>
+  <summary>Help &amp; support</summary>
+  <p>Place the cursor in a table cell, enter a formula beginning with <code>=</code>, then choose <b>Apply</b>. Choose <b>Recalculate table</b> after changing input values.</p>
+  <p>The table's top-left cell is A1. Use a range such as <code>B2:B5</code> to refer to cells in the same table. This add-in supports the functions and operators listed above, not every spreadsheet formula.</p>
+  <p>Formulas are evaluated locally. Cellwise does not include telemetry or send document contents to a service. See the project's testing checklist for troubleshooting.</p>
+ </details>
  <footer><small>Not affiliated with or endorsed by Microsoft.</small></footer>
  <script src="taskpane.js"></script>
 </body></html>

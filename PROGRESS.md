@@ -39,7 +39,8 @@
 - **Tested:** `npm run build` passed; generated icon files are 16x16, 32x32, and 80x80 pixels.
 - **Tested:** `npm run validate` passed against the updated manifest.
 - **Tested:** `node .\\node_modules\\typescript\\bin\\tsc --noEmit` passed.
-- **Tested:** recursive working-tree search for `table formulas` and `word-table-formulas` found no matches.
+- **Tested:** recursive working-tree search found no legacy product-name references in source, manifest, or package metadata.
 - **Unverified:** Live desktop/web host behavior. See `TESTING.md` for manual steps and expected results.
 - **Not present:** No zip/archive existed in the repository to rename; release archive naming is deferred to Phase C.
-- **Blocked:** Renaming `%WORKSPACE%
+- **Blocked:** Renaming the current workspace directory to its new branded name failed because Windows reports the directory is in use. No force or delayed rename was attempted.
+- **Next:** Close the workspace/process holding the directory open and rename it to `cellwise`, then continue Phase B.

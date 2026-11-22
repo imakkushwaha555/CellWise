@@ -20,6 +20,7 @@ CLAUDE.md
 # Project build output / dependencies
 dist/
 node_modules/
+/release/
 
 # OS files
 Thumbs.db

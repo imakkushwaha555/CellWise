@@ -1,6 +1,6 @@
 {
   "name": "cellwise",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Local A1 formulas for document tables, with no helper rows or columns.",
   "repository": {
     "type": "git",
@@ -23,7 +23,8 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "test": "node --experimental-strip-types src/formula.test.ts",
+    "package": "node scripts/package.mjs",
+    "test": "node --experimental-strip-types src/formula.test.ts && node --experimental-strip-types src/wordClient.test.ts",
     "typecheck": "npx tsc --noEmit",
     "certs": "npx office-addin-dev-certs install",
     "serve": "node scripts/serve.mjs",

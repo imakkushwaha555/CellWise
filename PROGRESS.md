@@ -16,7 +16,7 @@
     `types: ["office-js","node"]`).
   - `npm run validate` added (`npx office-addin-manifest validate manifest.xml`); **passes** (exit 0) after:
     - bumped `<Version>` from `0.1.0.0` -> `1.0.0.0` (schema required >= 1.0),
-    - replaced placeholder `<Id>` GUID with a fresh GUID: `73fd4aa1-b386-4bb7-8df9-e2c09777b1ed`,
+    - replaced placeholder `<Id>` GUID with a fresh GUID: `e1f74c30-625a-4135-9f0a-4dd06dfb1240`,
     - added missing `<Icon>` child element to the `<Group>` in the taskpane overrides.
   - `scripts/serve.mjs` created to use cross-platform `os.homedir()` for cert paths.
 
@@ -42,5 +42,53 @@
 - **Tested:** recursive working-tree search found no legacy product-name references in source, manifest, or package metadata.
 - **Unverified:** Live desktop/web host behavior. See `TESTING.md` for manual steps and expected results.
 - **Not present:** No zip/archive existed in the repository to rename; release archive naming is deferred to Phase C.
-- **Blocked:** Renaming the current workspace directory to its new branded name failed because Windows reports the directory is in use. No force or delayed rename was attempted.
-- **Next:** Close the workspace/process holding the directory open and rename it to `cellwise`, then continue Phase B.
+- **Resolved:** The workspace was later reopened from its renamed `cellwise` directory. No force or delayed rename was attempted.
+- **Next:** Continue the existing Phase B Word integration work.
+
+## Phase B: Word integration verification
+
+- **Verified:** Formula and mock-client tests, strict TypeScript type-check, add-in build, and manifest validation pass.
+- **Implemented in the worktree:** A mock Word client, formula-application/recalculation regression coverage, and mock `#ERR` behavior.
+- **Unverified:** Live Word sideload and document behavior; see `TESTING.md`.
+- **Status:** Step 2 changes are committed locally; live Word behavior remains unverified.
+- **Local commit:** `c25b6d7` (`fix: integrate Word formulas through testable client`).
+
+## Phase D: Installer prototype
+
+- **Implemented:** Added `npm run package`, an NSIS per-user EXE, a hosted-manifest ZIP, and
+  `scripts/Verify-Cellwise.ps1`. The EXE asks for an existing writable UNC catalog, registers
+  `HKCU\Software\Microsoft\Office\16.0\WEF\TrustedCatalogs`, and includes an MIT license page,
+  disclaimer, no-telemetry statement, and silent-mode support.
+- **Verified locally:** `npm run package` completed using a synthetic GitHub Pages URL. The ZIP
+  entries, generated manifest URLs, and EXE version metadata were inspected. The generated hosted
+  manifest also passed `office-addin-manifest validate`. The compiler reported NSIS 3.13 and zlib
+  compression. Synthetic-host EXE/ZIP artifacts were removed after each smoke test.
+- **Verified:** `npm run test`, `npm run typecheck`, `npm run validate`, `npm run package` with
+  synthetic URLs, and `git diff --check` pass. The generated package is only a smoke test; no
+  real-host installer has been produced.
+- **Not a production installer:** Microsoft's network-share catalog method is documented as
+  testing-only. The installer's required UNC share must already exist and may require separate
+  Windows sharing permissions. The installer does not create shares, alter firewall settings,
+  trust certificates, or create scheduled tasks.
+- **No final installer artifact:** No remote or real GitHub Pages owner is configured. The
+  localhost source manifest remains unchanged; packaging requires real `CELLWISE_BASE_URL` and
+  `CELLWISE_REPOSITORY_URL` values.
+- **Not tested:** Install/upgrade/repair/uninstall in Word or a clean Windows VM; documented
+  expected steps are in `INSTALLER_TESTING.md`. No signing application or setup exists.
+- **Researched:** SignPath Foundation advertises free signing for eligible OSS projects with a
+  published code-signing policy, MFA, defined signing roles, and manual approval per release.
+  Application/acceptance and SmartScreen behavior remain unverified; see
+  [INSTALLER_TESTING.md](INSTALLER_TESTING.md).
+- **Deferred:** MSI, per the user's choice. WiX has MS-RL source licensing and a maintenance-fee
+  condition for revenue-generating use; it conflicts with the no-paid-tool and default permissive
+  license requirements.
+- **Version conflict resolved:** At the user's direction, `package.json` and the lockfile are now
+  `1.0.0`, matching manifest `1.0.0.0` at the SemVer level. The generated NSIS executable has
+  numeric version metadata `1.0.0.0` and displays file/product version `1.0.0`. The prospective
+  release tag is `v1.0.0`; no tag has been created.
+- **Registration scope:** The user confirmed the UNC catalog route is testing-only. Do not present
+  the prototype as a production-ready standalone installer.
+- **Remaining blockers:** The GitHub repository has not been created, so there is no remote or real
+  Pages URL. Windows VM/live Word installation and installer runtime behavior remain unverified.
+  `AGENT_BRIEF.md` is absent; project rules were read from `AGENTS.md`, `.ai/instructions.txt`,
+  and available project documentation.

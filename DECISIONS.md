@@ -15,8 +15,9 @@
 - **Address parsing:** Added strict A1 `parseAddress` conversion to zero-based row/column indices
   and round-trip tests for A1, B3, AA1, and AB1.
 - **Root folder/archive:** The requested root-folder rename was attempted after the Phase A commit,
-  but Windows reported the directory was in use. No forced or delayed rename was attempted.
-  No zip/archive existed in the repository to rename; release archive naming remains for Phase C.
+  but Windows reported the directory was in use. The workspace was later reopened as `cellwise`.
+  No forced or delayed rename was attempted. No zip/archive existed in the repository to rename;
+  release archive naming remains for Phase C.
 
 ## Step 1: Environment and verification
 
@@ -43,7 +44,7 @@
 
 ### Placeholder GUID replacement
 - **Decision:** Replaced placeholder `new-guid-here` / old fixed GUID with a freshly generated
-  UUID: `73fd4aa1-b386-4bb7-8df9-e2c09777b1ed`.
+  UUID: `e1f74c30-625a-4135-9f0a-4dd06dfb1240`.
 - **Rationale:** Requirement: "Replace the placeholder GUID." Also the old GUID was fixed/inherited
   from scaffold; a fresh UUID avoids collisions with other add-ins.
 - **Trade-off:** None; required for validation to pass.
@@ -110,3 +111,46 @@
 - `office-addin-manifest` (MIT) and `@types/node` (MIT) added as devDependencies.
 - No third-party runtime dependencies added.
 - Original code only for the formula engine and build scripts.
+
+## Phase D: Installer and deployment research
+
+- **Current add-in build:** `npm run build` and `npm run validate` pass. The checked-in manifest
+  still targets `https://localhost:3000`; the output is a development build, not a standalone
+  installable package.
+- **Hosting direction:** GitHub Pages is the preferred static host from the release brief. This
+  would download the add-in's HTML/JavaScript, but the current application evaluates formulas
+  locally and has no code path that sends document contents to that host. Publishing or enabling
+  Pages is deferred until the repository is identified and the release gate is approved.
+- **Windows registration constraint:** Microsoft documents the
+  `HKCU\Software\Microsoft\Office\16.0\WEF\TrustedCatalogs` registry catalog for a network share,
+  with `Url` set to a UNC folder. Microsoft explicitly labels network-share deployment as testing
+  only and not supported for production. The reviewed documentation does not describe registering
+  a GitHub Pages manifest or a per-user local folder as this catalog.
+- **Other documented deployment methods:** Microsoft 365 Integrated Apps/Centralized Deployment
+  requires an organization administrator. SharePoint catalog limitations include lack of support
+  for `VersionOverrides`, which this add-in uses. These methods do not provide a verified,
+  no-admin, stand-alone desktop install for this manifest.
+- **Registration scope:** The user confirmed the existing writable UNC trusted catalog is for
+  testing only. No local-folder registry behavior is used, and this route must not be presented as
+  a production deployment method.
+- **Installer toolchain:** User selected deferring MSI. WiX's published terms include MS-RL for
+  its source and an Open Source Maintenance Fee for revenue-generating use of its releases, which
+  conflicts with the project's default license policy and the no-paid-tools requirement. NSIS
+  3.13 was verified locally. The installer explicitly uses the zlib compressor; the NSIS build
+  output confirmed zlib compression. No packaging dependency was added.
+- **Package prototype:** `npm run package` successfully generated a ZIP and EXE using a synthetic
+  GitHub Pages URL for smoke testing. The contents and Windows file/product versions were
+  inspected, then the fake-host artifacts were removed. This is not a distributable package.
+- **Version strategy:** At the user's direction, aligned `package.json` and `package-lock.json`
+  to `1.0.0`, matching the Office manifest `1.0.0.0` at the SemVer level. NSIS uses numeric
+  executable version metadata `1.0.0.0` and displays file/product version `1.0.0` (verified in
+  the generated EXE). The eventual release tag would be `v1.0.0`; no tag has been created.
+- **Signing research:** SignPath Foundation advertises free OSS signing, but requires an eligible
+  released and actively maintained project, clear ownership, MFA, defined author/reviewer/approver
+  roles, a published code-signing policy, and manual approval for each release. The certificate is
+  issued in the Foundation's name, not the project's. Eligibility and SmartScreen outcome are not
+  guaranteed; Cellwise has not applied. See [INSTALLER_TESTING.md](INSTALLER_TESTING.md).
+- **Remaining:** The GitHub repository has not been created, so no remote or Pages URL exists.
+  Windows VM/live Word install and installer runtime behavior remain unverified.
+- **Option 2:** Not selected. A local HTTPS server and locally trusted certificate add certificate
+  trust and lifecycle risks; do not implement without a reviewed, user-approved design.

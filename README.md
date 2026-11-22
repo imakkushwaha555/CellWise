@@ -31,7 +31,21 @@ Current operators: `+`, `-`, `*`, `/`, `^`, and `%`.
 The formula engine is intentionally an independent subset, not a promise of full spreadsheet
 compatibility. See [TESTING.md](TESTING.md) for the current manual test checklist and limitations.
 
-## Install and sideload
+## Install for Windows testing
+
+The add-in page must be hosted over HTTPS. The Windows installer registers its manifest through a
+trusted network-share catalog, which Microsoft documents for testing only and does not support for
+production. You must provide an existing writable UNC share; the installer does not create shares,
+change firewall settings, or install certificates. See [INSTALLER_TESTING.md](INSTALLER_TESTING.md)
+for build and installation steps.
+
+The installer is unsigned, so Windows may display an unknown-publisher or SmartScreen warning.
+Microsoft notes that new files can still trigger warnings while reputation builds, even if signed.
+The [SignPath Foundation free OSS signing program](https://signpath.org/) is a possible option,
+but Cellwise has not applied and acceptance is not guaranteed. See
+[INSTALLER_TESTING.md](INSTALLER_TESTING.md) for current signing status.
+
+## Local development
 
 Prerequisites: Node.js and a supported Microsoft Word host with add-in sideloading enabled.
 
@@ -42,9 +56,8 @@ npm run certs
 npm run serve
 ```
 
-In the Word host, upload `manifest.xml` using **Insert > Add-ins > My Add-ins > Upload My Add-in**.
-Keep the local development server running while testing. See [TESTING.md](TESTING.md) for detailed
-desktop and web verification steps.
+Keep the local development server running while testing. See [TESTING.md](TESTING.md) for the
+formula and host verification checklist.
 
 ## Development
 

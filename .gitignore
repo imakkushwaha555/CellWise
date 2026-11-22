@@ -1,0 +1,26 @@
+# BEGIN VS CODE AI GOVERNANCE PRIVATE FILES
+.ai/
+AGENTS.md
+CLAUDE.md
+.github/instructions/ollama-governance.instructions.md
+.github/agents/Project-Architect.agent.md
+**/.env
+**/.env.*
+!**/.env.example
+**/secrets/
+.local/
+*.pem
+*.key
+*.pfx
+*.p12
+*.log
+*.cache
+# END VS CODE AI GOVERNANCE PRIVATE FILES
+
+# Project build output / dependencies
+dist/
+node_modules/
+
+# OS files
+Thumbs.db
+.DS_Store

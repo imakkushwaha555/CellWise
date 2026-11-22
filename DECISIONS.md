@@ -14,8 +14,9 @@
   amber palette. No Microsoft assets or icon library were used.
 - **Address parsing:** Added strict A1 `parseAddress` conversion to zero-based row/column indices
   and round-trip tests for A1, B3, AA1, and AB1.
-- **Root folder/archive:** The workspace folder will be renamed to `cellwise` after validation.
-  No zip/archive existed in the repository at the start of this phase.
+- **Root folder/archive:** The requested root-folder rename was attempted after the Phase A commit,
+  but Windows reported the directory was in use. No forced or delayed rename was attempted.
+  No zip/archive existed in the repository to rename; release archive naming remains for Phase C.
 
 ## Step 1: Environment and verification
 

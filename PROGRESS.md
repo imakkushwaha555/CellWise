@@ -30,7 +30,7 @@
 
 ## Phase A: Rename to Cellwise
 
-- **Status:** Implemented and automated checks passed; phase commit is the remaining operation.
+- **Status:** Rename/addressing work committed as `498c460` (`chore: rename project to Cellwise`).
 - Updated package metadata, lockfile root name, add-in manifest, task-pane title/heading/footer,
   README, legal notes, testing notes, and source formula description.
 - Added the original SVG logo and build-generated 16/32/80 px PNG icons in `assets/`.
@@ -42,4 +42,4 @@
 - **Tested:** recursive working-tree search for `table formulas` and `word-table-formulas` found no matches.
 - **Unverified:** Live desktop/web host behavior. See `TESTING.md` for manual steps and expected results.
 - **Not present:** No zip/archive existed in the repository to rename; release archive naming is deferred to Phase C.
-- **Next:** Commit the Phase A changes, then rename the workspace directory to `cellwise`.
+- **Blocked:** Renaming `%WORKSPACE%

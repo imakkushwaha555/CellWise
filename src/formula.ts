@@ -33,7 +33,7 @@ type Tok = { t: "num" | "ref" | "range" | "id" | "op" | "("  | ")" | ","; v: str
 
 function tokenize(src: string): Tok[] {
   const out: Tok[] = [];
-  const re = /\s*(?:(\d+\.?\d*|\.\d+)|([A-Za-z]{1,3}\d+:[A-Za-z]{1,3}\d+)|([A-Za-z]{1,3}\d+)(?![A-Za-z(])|([A-Za-z_]+)|([+\-*/^()%,]))/y;
+  const re = /\s*(?:(\d+\.?\d*|\.\d+)|([A-Za-z]+\d+:[A-Za-z]+\d+)|([A-Za-z]+\d+)(?![A-Za-z(])|([A-Za-z_]+)|([+\-*/^()%,]))/y;
   let m: RegExpExecArray | null;
   let pos = 0;
   while (pos < src.length) {
@@ -70,16 +70,26 @@ export function evaluate(formula: string, grid: Grid): number {
   const next = () => toks[p++];
 
   const cell = (ref: string) => {
-    const m = /^([A-Za-z]+)(\d+)$/.exec(ref)!;
-    return grid[+m[2] - 1]?.[colToIndex(m[1])] ?? 0;
+    const { row, col } = parseAddress(ref);
+    return grid[row]?.[col] ?? 0;
   };
   const range = (r: string): number[] => {
     const [a, b] = r.split(":");
-    const ma = /^([A-Za-z]+)(\d+)$/.exec(a)!, mb = /^([A-Za-z]+)(\d+)$/.exec(b)!;
-    const [c1, c2] = [colToIndex(ma[1]), colToIndex(mb[1])].sort((x, y) => x - y);
-    const [r1, r2] = [+ma[2] - 1, +mb[2] - 1].sort((x, y) => x - y);
+    const start = parseAddress(a);
+    const end = parseAddress(b);
+    const [c1, c2] = [start.col, end.col].sort((x, y) => x - y);
+    const [r1, r2] = [start.row, end.row].sort((x, y) => x - y);
     const vals: number[] = [];
-    for (let i = r1; i <= r2; i++) for (let j = c1; j <= c2; j++) { const v = grid[i]?.[j]; if (v != null) vals.push(v); }
+    const lastRow = Math.min(r2, grid.length - 1);
+    const columnCount = grid.reduce((max, row) => Math.max(max, row.length), 0);
+    const lastColumn = Math.min(c2, columnCount - 1);
+    if (r1 > lastRow || c1 > lastColumn) return vals;
+    for (let i = r1; i <= lastRow; i++) {
+      for (let j = c1; j <= lastColumn; j++) {
+        const value = grid[i]?.[j];
+        if (value != null) vals.push(value);
+      }
+    }
     return vals;
   };
 

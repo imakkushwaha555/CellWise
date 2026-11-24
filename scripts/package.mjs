@@ -26,7 +26,7 @@ const parsedRepository = new URL(repositoryUrl);
 if (
   parsedBase.protocol !== "https:"
   || !parsedBase.hostname.endsWith(".github.io")
-  || parsedBase.pathname.replace(/\/+$/, "") !== "/cellwise"
+  || parsedBase.pathname.replace(/\/+$/, "").toLowerCase() !== "/cellwise"
   || parsedBase.search
   || parsedBase.hash
 ) {
@@ -35,7 +35,8 @@ if (
 if (
   parsedRepository.protocol !== "https:"
   || parsedRepository.hostname !== "github.com"
-  || !/^\/[^/]+\/cellwise$/.test(parsedRepository.pathname)
+  || parsedRepository.pathname.split("/").filter(Boolean).length !== 2
+  || parsedRepository.pathname.split("/")[2]?.toLowerCase() !== "cellwise"
   || repositoryUrl.includes("OWNER")
 ) {
   throw new Error(`CELLWISE_REPOSITORY_URL must be the real GitHub cellwise repository URL; got: ${repositoryUrl}`);

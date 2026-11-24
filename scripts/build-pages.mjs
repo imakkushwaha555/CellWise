@@ -19,7 +19,7 @@ const repository = new URL(repositoryUrl);
 if (
   base.protocol !== "https:"
   || base.hostname.toLowerCase() !== `${repository.pathname.split("/")[1]?.toLowerCase()}.github.io`
-  || base.pathname.replace(/\/+$/, "") !== "/cellwise"
+  || base.pathname.replace(/\/+$/, "").toLowerCase() !== "/cellwise"
   || base.search
   || base.hash
 ) {
@@ -28,7 +28,8 @@ if (
 if (
   repository.protocol !== "https:"
   || repository.hostname !== "github.com"
-  || !/^\/[^/]+\/cellwise$/.test(repository.pathname)
+  || repository.pathname.split("/").filter(Boolean).length !== 2
+  || repository.pathname.split("/")[2]?.toLowerCase() !== "cellwise"
   || repository.search
   || repository.hash
 ) {

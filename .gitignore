@@ -13,6 +13,9 @@ CLAUDE.md
 *.key
 *.pfx
 *.p12
+*.cer
+*.pvk
+*.snk
 *.log
 *.cache
 # END VS CODE AI GOVERNANCE PRIVATE FILES
@@ -22,7 +25,13 @@ dist/
 node_modules/
 /release/
 /_site/
+*.zip
+*.exe
 
-# OS files
+# Local IDE and OS state
+.vs/
+.vscode/*.local.json
+*.user
+*.suo
 Thumbs.db
 .DS_Store

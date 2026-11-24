@@ -123,6 +123,9 @@ export async function recalcTable(ctx: Word.RequestContext) {
 Office.onReady(() => {
   ($("apply") as HTMLButtonElement).onclick = () => run(applyFormula);
   ($("recalc") as HTMLButtonElement).onclick = () => run(recalcTable);
+  ($("formula") as HTMLInputElement).addEventListener("input", () => {
+    autoRangeAddress = null;
+  });
   Office.context.document.addHandlerAsync(Office.EventType.DocumentSelectionChanged, () => {
     if (lastSelectionTimer) clearTimeout(lastSelectionTimer);
     lastSelectionTimer = setTimeout(() => run(showSelection), DEBOUNCE_MS);
@@ -130,7 +133,19 @@ Office.onReady(() => {
   run(showSelection);
 });
 
-let autoRangeFormula: string | null = null;
+let autoRangeAddress: string | null = null;
+
+function clearSelectionDisplay() {
+  $("addr").textContent = "—";
+  for (const id of ["column-guide", "row-guide"]) {
+    const indicator = $(id);
+    indicator.textContent = "";
+    indicator.hidden = true;
+  }
+  const formula = $("formula") as HTMLInputElement;
+  if (autoRangeAddress && formula.value === autoRangeAddress) formula.value = "";
+  autoRangeAddress = null;
+}
 
 async function showSelection(ctx: Word.RequestContext) {
   const selection = ctx.document.getSelection();
@@ -140,41 +155,30 @@ async function showSelection(ctx: Word.RequestContext) {
   table.load("isNullObject");
   await ctx.sync();
 
-  if (cell.isNullObject || table.isNullObject) {
-    $("addr").textContent = "—";
-    $("guides").textContent = "";
-    if (autoRangeFormula) {
-      const formula = $("formula") as HTMLInputElement;
-      if (formula.value === autoRangeFormula) formula.value = "";
-      autoRangeFormula = null;
-    }
+  if (table.isNullObject) {
+    clearSelectionDisplay();
     return;
   }
-
-  $("addr").textContent = addressOf(cell.rowIndex, cell.cellIndex);
-  $("guides").textContent = `Column ${indexToCol(cell.cellIndex)} · Row ${cell.rowIndex + 1}`;
-
-  const formula = $("formula") as HTMLInputElement;
-  formula.placeholder = `=SUM(${addressOf(cell.rowIndex, cell.cellIndex)}:${addressOf(cell.rowIndex, cell.cellIndex)})`;
 
   const selectionRange = selection.getRange("Whole");
   const rows = table.rows;
   rows.load("items");
   await ctx.sync();
 
-  const comparisons: Array<{ relation: OfficeExtension.ClientResult<Word.LocationRelation>; row: number; col: number }> = [];
-
+  const rowCells: Word.TableCellCollection[] = [];
   for (const row of rows.items) {
     const cells = row.cells;
     cells.load("items");
-    await ctx.sync();
+    rowCells.push(cells);
+  }
+  await ctx.sync();
+
+  const comparisons: Array<{ relation: OfficeExtension.ClientResult<Word.LocationRelation>; cell: Word.TableCell }> = [];
+  for (const cells of rowCells) {
     for (const tableCell of cells.items) {
       tableCell.load("rowIndex,cellIndex");
-    }
-    await ctx.sync();
-    for (const tableCell of cells.items) {
       const relation = selectionRange.compareLocationWith(tableCell.body.getRange("Whole"));
-      comparisons.push({ relation, row: tableCell.rowIndex, col: tableCell.cellIndex });
+      comparisons.push({ relation, cell: tableCell });
     }
   }
 
@@ -182,29 +186,47 @@ async function showSelection(ctx: Word.RequestContext) {
   const selected: Array<{ row: number; col: number }> = [];
   for (const comparison of comparisons) {
     const relation = comparison.relation.value as string;
-    if (!["Unrelated", "Before", "After", "AdjacentBefore", "AdjacentAfter"].includes(relation)) {
-      selected.push({ row: comparison.row, col: comparison.col });
+    if (["Overlaps", "Contains", "Inside", "Equal"].includes(relation)) {
+      selected.push({ row: comparison.cell.rowIndex, col: comparison.cell.cellIndex });
     }
   }
 
-  if (selected.length > 1) {
-    const rowIndexes = selected.map((item) => item.row);
-    const colIndexes = selected.map((item) => item.col);
-    const range = rangeAddress(
-      Math.min(...rowIndexes),
-      Math.min(...colIndexes),
-      Math.max(...rowIndexes),
-      Math.max(...colIndexes),
-    );
-    $("addr").textContent = range;
-    $("guides").textContent = `Columns ${indexToCol(Math.min(...colIndexes))}-${indexToCol(Math.max(...colIndexes))} · Rows ${Math.min(...rowIndexes) + 1}-${Math.max(...rowIndexes) + 1}`;
+  if (selected.length === 0 && !cell.isNullObject) {
+    selected.push({ row: cell.rowIndex, col: cell.cellIndex });
+  }
+  if (selected.length === 0) {
+    clearSelectionDisplay();
+    return;
+  }
 
-    if (formula.value.trim() === "" || formula.value === autoRangeFormula) {
-      autoRangeFormula = `=SUM(${range})`;
-      formula.value = autoRangeFormula;
+  const rowIndexes = selected.map((item) => item.row);
+  const colIndexes = selected.map((item) => item.col);
+  const firstRow = Math.min(...rowIndexes);
+  const lastRow = Math.max(...rowIndexes);
+  const firstCol = Math.min(...colIndexes);
+  const lastCol = Math.max(...colIndexes);
+  const range = rangeAddress(firstRow, firstCol, lastRow, lastCol);
+
+  $("addr").textContent = range;
+  const columnGuide = $("column-guide");
+  columnGuide.textContent = firstCol === lastCol
+    ? `Column ${indexToCol(firstCol)}`
+    : `Columns ${indexToCol(firstCol)}-${indexToCol(lastCol)}`;
+  columnGuide.hidden = false;
+  const rowGuide = $("row-guide");
+  rowGuide.textContent = firstRow === lastRow
+    ? `Row ${firstRow + 1}`
+    : `Rows ${firstRow + 1}-${lastRow + 1}`;
+  rowGuide.hidden = false;
+
+  const formula = $("formula") as HTMLInputElement;
+  if (selected.length > 1) {
+    if (formula.value.trim() === "" || formula.value === autoRangeAddress) {
+      formula.value = range;
+      autoRangeAddress = range;
     }
-  } else if (autoRangeFormula && formula.value === autoRangeFormula) {
+  } else if (autoRangeAddress && formula.value === autoRangeAddress) {
     formula.value = "";
-    autoRangeFormula = null;
+    autoRangeAddress = null;
   }
 }

@@ -9,7 +9,7 @@ const releaseDir = join(root, "release");
 const stagingDir = join(releaseDir, "staging");
 const packageJson = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const version = packageJson.version;
-const baseUrl = process.env.CELLWISE_BASE_URL?.replace(/\/+$/, "");
+const configuredBaseUrl = process.env.CELLWISE_BASE_URL?.replace(/\/+$/, "");
 const repositoryUrl = process.env.CELLWISE_REPOSITORY_URL?.replace(/\/+$/, "");
 
 if (process.platform !== "win32") {
@@ -18,30 +18,35 @@ if (process.platform !== "win32") {
 if (!/^\d+\.\d+\.\d+$/.test(version)) {
   throw new Error(`Installer packaging requires a numeric SemVer version; found: ${version}`);
 }
-if (!baseUrl || !repositoryUrl) {
-  throw new Error("Set CELLWISE_BASE_URL and CELLWISE_REPOSITORY_URL to the deployed HTTPS URLs.");
+if (!repositoryUrl) {
+  throw new Error("Set CELLWISE_REPOSITORY_URL to the HTTPS GitHub repository URL.");
 }
-const parsedBase = new URL(baseUrl);
 const parsedRepository = new URL(repositoryUrl);
-if (
-  parsedBase.protocol !== "https:"
-  || !parsedBase.hostname.endsWith(".github.io")
-  || parsedBase.pathname.replace(/\/+$/, "").toLowerCase() !== "/cellwise"
-  || parsedBase.search
-  || parsedBase.hash
-) {
-  throw new Error(`CELLWISE_BASE_URL must be the deployed GitHub Pages URL for /cellwise; got: ${baseUrl}`);
-}
+const repositoryParts = parsedRepository.pathname.split("/").filter(Boolean);
 if (
   parsedRepository.protocol !== "https:"
   || parsedRepository.hostname !== "github.com"
-  || parsedRepository.pathname.split("/").filter(Boolean).length !== 2
-  || parsedRepository.pathname.split("/")[2]?.toLowerCase() !== "cellwise"
+  || repositoryParts.length !== 2
+  || repositoryParts[1].toLowerCase() !== "cellwise"
   || repositoryUrl.includes("OWNER")
 ) {
-  throw new Error(`CELLWISE_REPOSITORY_URL must be the real GitHub cellwise repository URL; got: ${repositoryUrl}`);
+  throw new Error(`CELLWISE_REPOSITORY_URL must be the real HTTPS GitHub CellWise repository URL; got: ${repositoryUrl}`);
 }
-const repositoryOwner = parsedRepository.pathname.split("/")[1];
+const [repositoryOwner, repositoryName] = repositoryParts;
+const baseUrl = `https://${repositoryOwner}.github.io/${repositoryName}`;
+if (configuredBaseUrl && configuredBaseUrl !== baseUrl) {
+  throw new Error(`CELLWISE_BASE_URL must exactly match the case-sensitive Pages URL derived from CELLWISE_REPOSITORY_URL: ${baseUrl}`);
+}
+const parsedBase = new URL(baseUrl);
+if (
+  parsedBase.protocol !== "https:"
+  || !parsedBase.hostname.endsWith(".github.io")
+  || parsedBase.pathname.replace(/\/+$/, "") !== `/${repositoryName}`
+  || parsedBase.search
+  || parsedBase.hash
+) {
+  throw new Error(`Derived GitHub Pages URL is invalid: ${baseUrl}`);
+}
 const pagesOwner = parsedBase.hostname.slice(0, -".github.io".length);
 if (repositoryOwner.toLowerCase() !== pagesOwner.toLowerCase()) {
   throw new Error("The GitHub Pages host owner must match the GitHub repository owner.");

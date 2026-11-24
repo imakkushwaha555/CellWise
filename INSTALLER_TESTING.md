@@ -16,14 +16,15 @@ current user's Office registry.
 Requirements: Windows, Node.js, NSIS 3.13, and an HTTPS-hosted Cellwise site/repository.
 
 ```powershell
-$env:CELLWISE_BASE_URL = 'https://OWNER.github.io/cellwise'
-$env:CELLWISE_REPOSITORY_URL = 'https://github.com/OWNER/cellwise'
+$env:CELLWISE_REPOSITORY_URL = 'https://github.com/<owner>/CellWise'
 npm run package
 ```
 
-Replace `OWNER` with the actual GitHub account or organization. Do not use these placeholders
-literally. The command creates a sideload ZIP and an unsigned `.exe` in the ignored `release/`
-directory. It refuses localhost and placeholder hosts.
+Replace `<owner>` with the actual GitHub account or organization. The package script derives the
+case-sensitive Pages URL from the repository URL, so the two URLs cannot accidentally disagree.
+GitHub Pages must already be deployed and reachable before installing the package. The command
+creates a sideload ZIP and an unsigned `.exe` in the ignored `release/` directory. It refuses
+localhost, placeholder hosts, and a conflicting `CELLWISE_BASE_URL` override.
 
 ## Install and verify
 

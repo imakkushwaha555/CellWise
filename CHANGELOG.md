@@ -1,6 +1,12 @@
 # Changelog
 
-## [1.0.0] - Unreleased
+## [1.0.1] - 2026-11-24
+
+- Fixed the installer catalog page so the UNC network path field is clearly visible.
+- Improved UNC-share validation and Word 2021 navigation instructions.
+- Added a dedicated support guide and installer branding.
+
+## [1.0.0] - Released
 
 - Added the local A1 formula engine and Word table integration.
 - Added mock-client regression tests, A1 address round trips, and type checking.

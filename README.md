@@ -64,7 +64,7 @@ npm run certs
 npm run serve
 ```
 
-Keep the local development server running. In Word, upload the development `manifest.xml` using **Insert > My Add-ins > Upload My Add-in**. Follow the [testing checklist](TESTING.md). The certificate command may require a local trust confirmation.
+Keep the local development server running. In Word 2021, register the localhost or network catalog, then open **Home > Add-ins > Advanced** and select **SHARED FOLDER**. For Office on the web, use **Insert > My Add-ins > Upload My Add-in**. Follow the [testing checklist](TESTING.md). The certificate command may require a local trust confirmation.
 
 ### Windows installer prototype
 

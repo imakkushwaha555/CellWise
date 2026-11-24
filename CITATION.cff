@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use Cellwise, please cite this software."
 title: "Cellwise"
-version: 1.0.0
+version: 1.0.1
 license: MIT
 authors:
   - name: "Cellwise contributors"

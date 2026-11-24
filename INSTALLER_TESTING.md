@@ -32,7 +32,7 @@ directory. It refuses localhost and placeholder hosts.
    not create the share; this setup may require Windows sharing permissions.
 2. Run `Cellwise-Setup-<version>.exe` as the current user. Do not elevate it. On the catalog page,
    enter the UNC path.
-3. Close and reopen Word. Open **Home > Add-ins > Advanced > Shared Folder**, select Cellwise, and
+3. Close and reopen Word. Open **Home > Add-ins > Advanced**. In the Office Add-ins dialog, select **SHARED FOLDER**, select Cellwise, and
    add it.
 4. Run `scripts\Verify-Cellwise.ps1` from PowerShell. Expected output begins `Cellwise registration: OK`.
 5. Apply and recalculate formulas using the checklist in [TESTING.md](TESTING.md).

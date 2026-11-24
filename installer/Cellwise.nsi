@@ -82,10 +82,12 @@ FunctionEnd
 Function CatalogPageCreate
   nsDialogs::Create 1018
   Pop $0
-  ${NSD_CreateLabel} 0 0 100% 48u "Step 1: Share a folder in Windows.\r\nStep 2: Enter its UNC path, for example \\SERVER-PC\\CellwiseCatalog.\r\nDo not enter C:\\Users\\... or a mapped drive. The share must allow read and write access."
+  ${NSD_CreateLabel} 0 0 100% 36u "1. Share a folder in Windows File Explorer.\r\n2. Enter the UNC path below, for example \\SERVER-PC\CellwiseCatalog.\r\nDo not enter C:\Users\... or a mapped drive."
   Pop $0
-  ${NSD_CreateText} 0 44u 100% 12u ""
+  ${NSD_CreateText} 0 40u 100% 18u ""
   Pop $CatalogInput
+  ${NSD_CreateLabel} 0 62u 100% 42u "The share must allow Read/Write. Its full network path appears after Folder Properties > Sharing > Share."
+  Pop $0
   nsDialogs::Show
 FunctionEnd
 

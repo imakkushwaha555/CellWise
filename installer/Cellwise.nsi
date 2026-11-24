@@ -104,8 +104,9 @@ FunctionEnd
 Function ValidateCatalogUrl
   StrCpy $0 $CatalogUrl 2
   StrCmp $0 "\\" 0 catalog_invalid
-  IfFileExists "$CatalogUrl\." 0 catalog_invalid
 
+  ; Do not use IfFileExists here: NSIS can return false for a valid SMB UNC share.
+  ; The file-create test below is the actual permission check.
   StrCpy $1 "$CatalogUrl\.cellwise-write-test-${CATALOG_ID}.tmp"
   ClearErrors
   FileOpen $2 "$1" w

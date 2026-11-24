@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.1.1] - 2026-11-24
+
+- Fixed UNC catalog validation for valid writable SMB shares.
+- Removed a redundant directory check that could reject `\\ComputerName\Share` paths.
+
 ## [1.1.0] - 2026-11-24
 
 - Added GitHub feedback link in the task pane.

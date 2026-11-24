@@ -2,11 +2,11 @@
 
 ## Supported scope
 
-Cellwise v1.0.0 is a testing-only Microsoft Word add-in. Live Word and clean-Windows-VM validation is still pending. The installer uses an Office shared-folder trusted catalog, not a production Microsoft-supported installer route.
+Cellwise v1.1.1 is a testing-only Microsoft Word add-in. Live Word and clean-Windows-VM validation is still pending. The installer uses an Office shared-folder trusted catalog, not a production Microsoft-supported installer route.
 
 ## Installation
 
-1. Download `Cellwise-Setup-1.1.0.exe` from the [GitHub release](https://github.com/imakkushwaha555/CellWise/releases/tag/v1.0.0).
+1. Download `Cellwise-Setup-1.1.1.exe` from the [GitHub release](https://github.com/imakkushwaha555/CellWise/releases/tag/v1.1.1).
 2. Create and share a folder on your Windows PC, for example `C:\Users\YourName\CellwiseCatalog`.
 3. Right-click the folder, choose **Properties**, open **Sharing**, and share it so the folder is available on the network.
 4. Run the installer. On the **Cellwise catalog** page, enter the UNC path shown by Windows Sharing, for example `\\DESKTOP-NAME\CellwiseCatalog`, not `C:\Users\...`. The field appears below the three-line instruction text.

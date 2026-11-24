@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 360" role="img" aria-labelledby="title description">
+  <title id="title">Illustrative A1 formula example</title>
+  <desc id="description">A small table with values in column B and a total calculated by the formula SUM of B2 through B4.</desc>
+  <rect width="960" height="360" rx="24" fill="#f7f4fa"/>
+  <text x="52" y="58" fill="#2f2343" font-family="Segoe UI, sans-serif" font-size="26" font-weight="700">A1 references without helper labels</text>
+  <text x="52" y="94" fill="#5a5165" font-family="Segoe UI, sans-serif" font-size="17">Illustration only; not a captured Word screen.</text>
+  <g font-family="Segoe UI, sans-serif" text-anchor="middle">
+    <rect x="52" y="126" width="510" height="174" rx="12" fill="#fff" stroke="#d7d0df" stroke-width="2"/>
+    <path d="M222 126v174M392 126v174M52 169h510M52 212h510M52 255h510" stroke="#d7d0df" stroke-width="2"/>
+    <text x="137" y="155" fill="#766d81" font-size="14">A</text>
+    <text x="307" y="155" fill="#766d81" font-size="14">B</text>
+    <text x="477" y="155" fill="#766d81" font-size="14">C</text>
+    <text x="137" y="198" fill="#2f2343" font-size="17">Item 1</text>
+    <text x="307" y="198" fill="#2f2343" font-size="17">12</text>
+    <text x="137" y="241" fill="#2f2343" font-size="17">Item 2</text>
+    <text x="307" y="241" fill="#2f2343" font-size="17">18</text>
+    <text x="137" y="284" fill="#2f2343" font-size="17">Total</text>
+    <rect x="223" y="256" width="168" height="43" fill="#f4bd67" opacity=".28"/>
+    <text x="307" y="284" fill="#2f2343" font-size="17" font-weight="700">30</text>
+  </g>
+  <rect x="610" y="145" width="294" height="116" rx="16" fill="#2f2343"/>
+  <text x="640" y="183" fill="#a9e2d0" font-family="Segoe UI, sans-serif" font-size="16">Formula in the total cell</text>
+  <text x="640" y="222" fill="#fff" font-family="Consolas, monospace" font-size="23">=SUM(B2:B3)</text>
+  <text x="610" y="297" fill="#5a5165" font-family="Segoe UI, sans-serif" font-size="15">Coordinates are relative to each table.</text>
+</svg>

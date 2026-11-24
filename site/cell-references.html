@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Word table formula cell references: A1 addressing | Cellwise</title>
+  <meta name="description" content="Learn how Cellwise maps A1-style cell references to positions in a Word table, including columns after Z and range endpoints.">
+  <link rel="canonical" href="{{BASE_URL}}/cell-references.html">
+  <meta property="og:title" content="Word table formula cell references: A1 addressing">
+  <meta property="og:description" content="Cellwise maps A1-style addresses to physical positions in the current Word table.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="{{BASE_URL}}/cell-references.html">
+  <meta property="og:image" content="{{BASE_URL}}/assets/social-preview.png">
+  <meta property="og:image:alt" content="Cellwise A1 formula illustration">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Word table formula cell references: A1 addressing">
+  <meta name="twitter:description" content="A1-style references for the current Word table.">
+  <meta name="twitter:image" content="{{BASE_URL}}/assets/social-preview.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Cellwise","description":"An open-source Word add-in for local A1-style formulas in document tables.","applicationCategory":"BusinessApplication","softwareVersion":"1.0.0","license":"https://opensource.org/license/mit","url":"{{BASE_URL}}/cell-references.html","codeRepository":"{{REPOSITORY_URL}}"}
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header"><div class="wrap nav"><a class="brand" href="./"><img src="assets/cellwise-logo.svg" alt="Cellwise grid mark">Cellwise</a><nav class="nav-links" aria-label="Main navigation"><a href="./">Home</a><a href="sum-a-column.html">Sum a column</a><a href="averages.html">Averages</a><a href="excel-like-formulas.html">Formula guide</a></nav></div></header>
+  <main class="wrap">
+    <p class="eyebrow">Addressing guide</p>
+    <h1>Word table formula cell references</h1>
+    <p class="lead">Cellwise uses A1 notation based on the row and column position within the current table.</p>
+    <h2>Address rules</h2>
+    <ul>
+      <li>The table's top-left cell is <code>A1</code>.</li>
+      <li>Columns count from left to right: <code>A</code>, <code>B</code>, through <code>Z</code>, then <code>AA</code>, <code>AB</code>, and onward.</li>
+      <li>Rows count from top to bottom, starting at <code>1</code>. A header is still part of the table and therefore uses row 1.</li>
+      <li>References and ranges refer only to the table in which the formula is applied.</li>
+    </ul>
+    <h2>Examples</h2>
+    <div class="example"><table><thead><tr><th>Address</th><th>Position in the current table</th></tr></thead><tbody>
+      <tr><td><code>A1</code></td><td>First row, first column</td></tr>
+      <tr><td><code>B3</code></td><td>Third row, second column</td></tr>
+      <tr><td><code>AA2</code></td><td>Second row, twenty-seventh column</td></tr>
+      <tr><td><code>B2:B5</code></td><td>Cells in column B, rows 2 through 5</td></tr>
+    </tbody></table></div>
+    <h2>Use a range</h2>
+    <p>Use a colon between the first and last cell, as in <code>=SUM(B2:B5)</code>. Cellwise accepts the range endpoints in either order and reads the rectangle between them. Numeric values are used; empty and non-numeric values are skipped.</p>
+    <p>For a worked example, see <a href="sum-a-column.html">how to sum a Word table column</a>.</p>
+  </main>
+  <footer class="site-footer"><div class="wrap"><p class="disclaimer">Not affiliated with or endorsed by Microsoft.</p><p><a href="./">Cellwise home</a></p></div></footer>
+</body>
+</html>

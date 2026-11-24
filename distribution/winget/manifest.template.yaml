@@ -1,0 +1,15 @@
+# DRAFT ONLY: not schema-valid or submit-ready; see ../README.md.
+PackageIdentifier: REPLACE_WITH_OWNER.Cellwise
+PackageVersion: 1.0.0
+PackageName: Cellwise
+Publisher: Cellwise contributors
+License: MIT
+ShortDescription: A1-style formulas for Word tables; not affiliated with or endorsed by Microsoft.
+PackageUrl: REPLACE_WITH_PUBLIC_REPOSITORY_URL
+InstallerType: null
+Installers:
+  - Architecture: x64
+    InstallerUrl: REPLACE_WITH_VERIFIED_PRODUCTION_INSTALLER_URL
+    InstallerSha256: REPLACE_WITH_RELEASE_SHA256
+ManifestType: version
+ManifestVersion: 1.6.0

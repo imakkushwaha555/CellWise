@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calculate averages in Word tables with Cellwise | A1 formula guide</title>
+  <meta name="description" content="Calculate the average of numeric Word table cells with Cellwise using an A1 range such as =AVERAGE(C2:C6).">
+  <link rel="canonical" href="{{BASE_URL}}/averages.html">
+  <meta property="og:title" content="Calculate averages in Word tables with Cellwise">
+  <meta property="og:description" content="Use an A1 range and the AVERAGE function to calculate numeric table values locally.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="{{BASE_URL}}/averages.html">
+  <meta property="og:image" content="{{BASE_URL}}/assets/social-preview.png">
+  <meta property="og:image:alt" content="Cellwise A1 formula illustration">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Calculate averages in Word tables with Cellwise">
+  <meta name="twitter:description" content="Use =AVERAGE(C2:C6) for numeric table values.">
+  <meta name="twitter:image" content="{{BASE_URL}}/assets/social-preview.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Cellwise","description":"An open-source Word add-in for local A1-style formulas in document tables.","applicationCategory":"BusinessApplication","softwareVersion":"1.0.0","license":"https://opensource.org/license/mit","url":"{{BASE_URL}}/averages.html","codeRepository":"{{REPOSITORY_URL}}"}
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header"><div class="wrap nav"><a class="brand" href="./"><img src="assets/cellwise-logo.svg" alt="Cellwise grid mark">Cellwise</a><nav class="nav-links" aria-label="Main navigation"><a href="./">Home</a><a href="sum-a-column.html">Sum a column</a><a href="cell-references.html">Cell references</a><a href="excel-like-formulas.html">Formula guide</a></nav></div></header>
+  <main class="wrap">
+    <p class="eyebrow">Tutorial</p>
+    <h1>Calculate averages in Word tables</h1>
+    <p class="lead">Cellwise's <code>AVERAGE</code> function accepts an A1-style range, for example <code>=AVERAGE(C2:C6)</code>.</p>
+    <p class="notice"><strong>Host test status:</strong> live Word behavior has not yet been verified. Use a copy of your document while evaluating the testing build.</p>
+    <h2>Calculate an average</h2>
+    <ol>
+      <li>Choose the result cell in the same Word table.</li>
+      <li>Enter <code>=AVERAGE(C2:C6)</code>, changing the column and row range to match the cells to average.</li>
+      <li>Choose <strong>Apply</strong>.</li>
+      <li>After editing the input values, choose <strong>Recalculate table</strong>.</li>
+    </ol>
+    <h2>How the range is read</h2>
+    <p>The top-left cell in the table is A1. A range includes numeric cells between its endpoints; empty and non-numeric cells are skipped by the current engine. Cellwise does not read cells from another table or workbook.</p>
+    <h2>Related formulas</h2>
+    <ul><li><code>=SUM(C2:C6)</code> adds the range.</li><li><code>=MIN(C2:C6)</code> and <code>=MAX(C2:C6)</code> return the lowest and highest numeric values.</li><li><code>=ROUND(AVERAGE(C2:C6),2)</code> rounds the result to two decimal places.</li></ul>
+    <p>See the full <a href="excel-like-formulas.html">formula reference</a> or the <a href="cell-references.html">A1 addressing guide</a>.</p>
+  </main>
+  <footer class="site-footer"><div class="wrap"><p class="disclaimer">Not affiliated with or endorsed by Microsoft.</p><p><a href="./">Cellwise home</a></p></div></footer>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>cellwise</id>
+    <version>1.0.0</version>
+    <title>Cellwise</title>
+    <authors>Cellwise contributors</authors>
+    <owners>REPLACE_WITH_MAINTAINER</owners>
+    <license>MIT</license>
+    <projectUrl>REPLACE_WITH_PUBLIC_PROJECT_URL</projectUrl>
+    <description>A1-style formulas for Word tables; not affiliated with or endorsed by Microsoft.</description>
+    <releaseNotes>Draft only. Do not submit until a supported production install route is verified.</releaseNotes>
+  </metadata>
+  <files />
+</package>

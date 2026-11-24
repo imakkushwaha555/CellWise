@@ -1,0 +1,43 @@
+name: Bug report
+description: Report a reproducible Cellwise problem.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: "Please do not include private documents, personal data, passwords, or tokens."
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the expected and actual behavior.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Cellwise version or commit
+    validations:
+      required: true
+  - type: input
+    id: host
+    attributes:
+      label: Word host and version
+      description: Desktop or web, platform, and version if known.
+    validations:
+      required: false
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Use a small synthetic table and formula; do not attach a real document.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant error text
+      description: Remove names, document content, paths, and other private details.
+    validations:
+      required: false

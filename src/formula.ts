@@ -17,6 +17,21 @@ export function indexToCol(i: number): string {
 
 export const addressOf = (row: number, col: number) => `${indexToCol(col)}${row + 1}`;
 
+export function rangeAddress(
+  startRow: number,
+  startCol: number,
+  endRow: number,
+  endCol: number,
+): string {
+  const rowStart = Math.min(startRow, endRow);
+  const rowEnd = Math.max(startRow, endRow);
+  const colStart = Math.min(startCol, endCol);
+  const colEnd = Math.max(startCol, endCol);
+  const start = addressOf(rowStart, colStart);
+  const end = addressOf(rowEnd, colEnd);
+  return start === end ? start : `${start}:${end}`;
+}
+
 export function parseAddress(address: string): { row: number; col: number } {
   const match = /^([A-Za-z]+)([1-9]\d*)$/.exec(address);
   if (!match) throw new Error(`Invalid cell address '${address}'`);

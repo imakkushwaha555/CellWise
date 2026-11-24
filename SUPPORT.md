@@ -6,7 +6,7 @@ Cellwise v1.0.0 is a testing-only Microsoft Word add-in. Live Word and clean-Win
 
 ## Installation
 
-1. Download `Cellwise-Setup-1.0.1.exe` from the [GitHub release](https://github.com/imakkushwaha555/CellWise/releases/tag/v1.0.0).
+1. Download `Cellwise-Setup-1.1.0.exe` from the [GitHub release](https://github.com/imakkushwaha555/CellWise/releases/tag/v1.0.0).
 2. Create and share a folder on your Windows PC, for example `C:\Users\YourName\CellwiseCatalog`.
 3. Right-click the folder, choose **Properties**, open **Sharing**, and share it so the folder is available on the network.
 4. Run the installer. On the **Cellwise catalog** page, enter the UNC path shown by Windows Sharing, for example `\\DESKTOP-NAME\CellwiseCatalog`, not `C:\Users\...`. The field appears below the three-line instruction text.
@@ -48,6 +48,10 @@ The installer is currently unsigned. If Windows SmartScreen reports that it prev
 - Check that this URL opens in a browser: https://imakkushwaha555.github.io/CellWise/taskpane.html
 - Check Word's add-in and privacy policies with your administrator.
 - Clear cached Office add-ins only after documenting the existing registration.
+
+## Range selection
+
+Select a rectangular block of table cells. Cellwise shows the selected A1 range in the side panel, for example `B2:D4`, and fills an empty formula bar with `=SUM(B2:D4)`. It also shows the selected columns and rows as grey guide text inside the task pane. These guides are not inserted into the Word document and cannot appear in printed or PDF output.
 
 ## Report a problem
 

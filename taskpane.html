@@ -7,13 +7,14 @@
  body{font-family:Segoe UI,sans-serif;margin:12px;font-size:14px}
  input{width:100%;box-sizing:border-box;padding:6px;margin:6px 0}
  button{padding:6px 10px;margin-right:6px}
- #addr{font-weight:600} #status{margin-top:10px} .err{color:#b00020}
+ #addr{font-weight:600} #guides{margin:8px 0;color:#777;font-size:12px} #status{margin-top:10px} .err{color:#b00020}
  small{color:#666}
  details{margin-top:14px} summary{cursor:pointer;font-weight:600}
 </style></head>
 <body>
  <h1>Cellwise</h1>
- <div>Selected cell: <span id="addr">—</span></div>
+ <div>Selected range: <span id="addr">—</span></div>
+ <div id="guides" aria-live="polite"></div>
  <input id="formula" placeholder="=SUM(B2:B5)  or  =C2*D2">
  <button id="apply">Apply</button><button id="recalc">Recalculate table</button>
  <div id="status"></div>
@@ -24,6 +25,7 @@
   <p>The table's top-left cell is A1. Use a range such as <code>B2:B5</code> to refer to cells in the same table. This add-in supports the functions and operators listed above, not every spreadsheet formula.</p>
   <p>Formulas are evaluated locally. Cellwise does not include telemetry or send document contents to a service. See the project's testing checklist for troubleshooting.</p>
  </details>
+ <p><a href="https://github.com/imakkushwaha555/CellWise/issues" target="_blank" rel="noopener">Send feedback on GitHub</a></p>
  <footer><small>Not affiliated with or endorsed by Microsoft.</small></footer>
  <script src="taskpane.js"></script>
 </body></html>

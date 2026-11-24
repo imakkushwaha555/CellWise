@@ -1,4 +1,4 @@
-import { evaluate, addressOf, parseAddress } from "./formula.ts";
+import { evaluate, addressOf, parseAddress, rangeAddress } from "./formula.ts";
 const g = [[1, 2, 3], [4, 5, 6], [7, 8, null]];
 const eq = (f: string, want: number) => { const got = evaluate(f, g); console.log(got === want ? "ok  " : "FAIL", f, got); if (got !== want) process.exitCode = 1; };
 eq("=A1+B2*C3", 1); eq("=SUM(A1:C3)", 36); eq("=AVERAGE(A1:A3)", 4);
@@ -11,6 +11,9 @@ const addresses = [
   { row: 0, col: 27, address: "AB1" },
   { row: 0, col: 18278, address: "AAAA1" },
 ];
+if (rangeAddress(2, 1, 0, 0) !== "A1:B3") throw new Error("Range normalization failed.");
+console.log("ok   rangeAddress normalization");
+
 for (const value of addresses) {
   const actual = addressOf(value.row, value.col);
   if (actual !== value.address) throw new Error(`Expected ${value.address}, got ${actual}`);

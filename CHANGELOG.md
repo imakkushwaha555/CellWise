@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.0] - 2026-11-24
+
+- Added GitHub feedback link in the task pane.
+- Added multi-cell A1 range detection and automatic SUM range formulas.
+- Added grey column/row guides inside the task pane without adding text to the Word document.
+
 ## [1.0.1] - 2026-11-24
 
 - Fixed the installer catalog page so the UNC network path field is clearly visible.

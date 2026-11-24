@@ -1,6 +1,6 @@
 /// <reference types="office-js" />
 
-import { evaluate, addressOf } from "./formula";
+import { evaluate, addressOf, indexToCol, rangeAddress } from "./formula";
 import {
   computeCell,
   formatResult,
@@ -130,9 +130,81 @@ Office.onReady(() => {
   run(showSelection);
 });
 
+let autoRangeFormula: string | null = null;
+
 async function showSelection(ctx: Word.RequestContext) {
-  const cell = ctx.document.getSelection().parentTableCellOrNullObject;
+  const selection = ctx.document.getSelection();
+  const cell = selection.parentTableCellOrNullObject;
+  const table = selection.parentTableOrNullObject;
   cell.load("isNullObject,rowIndex,cellIndex");
+  table.load("isNullObject");
   await ctx.sync();
-  $("addr").textContent = cell.isNullObject ? "—" : addressOf(cell.rowIndex, cell.cellIndex);
+
+  if (cell.isNullObject || table.isNullObject) {
+    $("addr").textContent = "—";
+    $("guides").textContent = "";
+    if (autoRangeFormula) {
+      const formula = $("formula") as HTMLInputElement;
+      if (formula.value === autoRangeFormula) formula.value = "";
+      autoRangeFormula = null;
+    }
+    return;
+  }
+
+  $("addr").textContent = addressOf(cell.rowIndex, cell.cellIndex);
+  $("guides").textContent = `Column ${indexToCol(cell.cellIndex)} · Row ${cell.rowIndex + 1}`;
+
+  const formula = $("formula") as HTMLInputElement;
+  formula.placeholder = `=SUM(${addressOf(cell.rowIndex, cell.cellIndex)}:${addressOf(cell.rowIndex, cell.cellIndex)})`;
+
+  const selectionRange = selection.getRange("Whole");
+  const rows = table.rows;
+  rows.load("items");
+  await ctx.sync();
+
+  const comparisons: Array<{ relation: OfficeExtension.ClientResult<Word.LocationRelation>; row: number; col: number }> = [];
+
+  for (const row of rows.items) {
+    const cells = row.cells;
+    cells.load("items");
+    await ctx.sync();
+    for (const tableCell of cells.items) {
+      tableCell.load("rowIndex,cellIndex");
+    }
+    await ctx.sync();
+    for (const tableCell of cells.items) {
+      const relation = selectionRange.compareLocationWith(tableCell.body.getRange("Whole"));
+      comparisons.push({ relation, row: tableCell.rowIndex, col: tableCell.cellIndex });
+    }
+  }
+
+  await ctx.sync();
+  const selected: Array<{ row: number; col: number }> = [];
+  for (const comparison of comparisons) {
+    const relation = comparison.relation.value as string;
+    if (!["Unrelated", "Before", "After", "AdjacentBefore", "AdjacentAfter"].includes(relation)) {
+      selected.push({ row: comparison.row, col: comparison.col });
+    }
+  }
+
+  if (selected.length > 1) {
+    const rowIndexes = selected.map((item) => item.row);
+    const colIndexes = selected.map((item) => item.col);
+    const range = rangeAddress(
+      Math.min(...rowIndexes),
+      Math.min(...colIndexes),
+      Math.max(...rowIndexes),
+      Math.max(...colIndexes),
+    );
+    $("addr").textContent = range;
+    $("guides").textContent = `Columns ${indexToCol(Math.min(...colIndexes))}-${indexToCol(Math.max(...colIndexes))} · Rows ${Math.min(...rowIndexes) + 1}-${Math.max(...rowIndexes) + 1}`;
+
+    if (formula.value.trim() === "" || formula.value === autoRangeFormula) {
+      autoRangeFormula = `=SUM(${range})`;
+      formula.value = autoRangeFormula;
+    }
+  } else if (autoRangeFormula && formula.value === autoRangeFormula) {
+    formula.value = "";
+    autoRangeFormula = null;
+  }
 }

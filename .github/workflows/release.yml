@@ -129,7 +129,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           $version = "${{ steps.version.outputs.value }}"
-          $ghVersion = (gh --version | Select-Object -First 1) -replace "^gh version ", ""
+          $ghVersion = ((gh --version | Select-Object -First 1) -replace "^gh version ", "" -split " ")[0]
           if ($ghVersion -ne "2.104.0") {
             throw "Expected GitHub CLI 2.104.0; found $ghVersion."
           }

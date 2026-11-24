@@ -78,6 +78,7 @@ writeFileSync(generatedManifestPath, manifest, "utf8");
 writeFileSync(join(stagingDir, "LICENSE"), readFileSync(join(root, "LICENSE")));
 writeFileSync(join(stagingDir, "NOTICE"), readFileSync(join(root, "NOTICE")));
 writeFileSync(join(stagingDir, "SUPPORT.md"), readFileSync(join(root, "SUPPORT.md")));
+writeFileSync(join(stagingDir, "Remove-Cellwise.ps1"), readFileSync(join(root, "scripts", "Remove-Cellwise.ps1")));
 execSync(`npx office-addin-manifest validate "${generatedManifestPath}"`, {
   cwd: root,
   stdio: "inherit",
@@ -122,6 +123,7 @@ const args = [
   `/DVERIFY_SCRIPT=${join(root, "scripts", "Verify-Cellwise.ps1")}`,
   `/DLICENSE_FILE=${join(root, "LICENSE")}`,
   `/DNOTICE_FILE=${join(root, "NOTICE")}`,
+  `/DREMOVE_SCRIPT=${join(root, "scripts", "Remove-Cellwise.ps1")}`,
   join(root, "installer", "Cellwise.nsi"),
 ];
 execFileSync(makensis, args, { cwd: root, stdio: "inherit" });

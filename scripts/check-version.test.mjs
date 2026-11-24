@@ -9,7 +9,7 @@ const checker = join(root, "scripts", "check-version.mjs");
 
 const matchingTag = spawnSync(process.execPath, [checker], {
   encoding: "utf8",
-  env: { ...process.env, GITHUB_REF_NAME: "v1.1.1" },
+  env: { ...process.env, GITHUB_REF_NAME: "v1.0.0" },
 });
 assert.equal(matchingTag.status, 0, matchingTag.stderr);
 
@@ -18,5 +18,5 @@ const mismatchedTag = spawnSync(process.execPath, [checker], {
   env: { ...process.env, GITHUB_REF_NAME: "v0.1.0" },
 });
 assert.notEqual(mismatchedTag.status, 0);
-assert.match(mismatchedTag.stderr, /must match v1\.1\.1/);
+assert.match(mismatchedTag.stderr, /must match v1\.0\.0/);
 console.log("version gate checks passed");

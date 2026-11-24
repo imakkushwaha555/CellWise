@@ -2,14 +2,14 @@
 
 ## Supported scope
 
-Cellwise v1.1.1 is a testing-only Microsoft Word add-in. Live Word and clean-Windows-VM validation is still pending. The installer uses an Office shared-folder trusted catalog, not a production Microsoft-supported installer route.
+Cellwise is a testing-only Microsoft Word add-in. Live Word and clean-Windows-VM validation is still pending. The installer uses an Office shared-folder trusted catalog, not a production Microsoft-supported installer route.
 
 ## Installation
 
-1. Download `Cellwise-Setup-1.1.1.exe` from the [GitHub release](https://github.com/imakkushwaha555/CellWise/releases/tag/v1.1.1).
-2. Create and share a folder on your Windows PC, for example `C:\Users\YourName\CellwiseCatalog`.
+1. Download the Cellwise installer from the final GitHub release.
+2. Create and share your own folder on your Windows PC. The folder name and UNC computer/share path must belong to your system; do not use a previously copied example or a local `C:\...` path.
 3. Right-click the folder, choose **Properties**, open **Sharing**, and share it so the folder is available on the network.
-4. Run the installer. On the **Cellwise catalog** page, enter the UNC path shown by Windows Sharing, for example `\\DESKTOP-NAME\CellwiseCatalog`, not `C:\Users\...`. The field appears below the three-line instruction text.
+4. Run the installer. On the **Cellwise catalog** page, enter the UNC path shown by Windows Sharing. Enter a path you created and own, for example `\\DESKTOP-NAME\CellwiseCatalog`, not `C:\Users\...`.
 5. Close every Word window and reopen Word 2021.
 6. Open a document. Select **Home > Add-ins > Advanced**. In the **Office Add-ins** dialog, select **SHARED FOLDER** at the top, select **Cellwise**, and choose **Add**.
 
@@ -42,6 +42,18 @@ The installer is currently unsigned. If Windows SmartScreen reports that it prev
 ```powershell
 & "$env:LOCALAPPDATA\Programs\Cellwise\Verify-Cellwise.ps1"
 ```
+
+### Remove or reinstall Cellwise
+
+Use **Windows Settings > Apps > Installed apps > Cellwise** and choose **Uninstall**. The Start menu can also provide **Support** and **Uninstall Cellwise** entries.
+
+To remove only the add-in registration without using the uninstaller, run:
+
+```powershell
+& "$env:LOCALAPPDATA\Programs\Cellwise\Remove-Cellwise.ps1"
+```
+
+Close all Word windows before removing or reinstalling. Reopen Word, open **Home > Add-ins > Advanced**, and verify that **SHARED FOLDER** no longer lists Cellwise.
 
 ### The task pane does not load
 

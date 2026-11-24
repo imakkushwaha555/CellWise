@@ -1,6 +1,6 @@
 {
   "name": "cellwise",
-  "version": "1.1.1",
+  "version": "1.0.0",
   "description": "Excel-style A1 formulas for Microsoft Word tables. Local-only open-source add-in; no helper rows or columns. Not affiliated with or endorsed by Microsoft.",
   "repository": {
     "type": "git",

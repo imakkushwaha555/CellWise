@@ -27,6 +27,9 @@ Unicode true
 !ifndef NOTICE_FILE
   !error "NOTICE_FILE is required"
 !endif
+!ifndef REMOVE_SCRIPT
+  !error "REMOVE_SCRIPT is required"
+!endif
 
 !define PRODUCT_NAME "Cellwise"
 !define ADDIN_ID "e1f74c30-625a-4135-9f0a-4dd06dfb1240"
@@ -143,6 +146,7 @@ Section "Install"
   File /oname=Verify-Cellwise.ps1 "${VERIFY_SCRIPT}"
   File /oname=NOTICE "${NOTICE_FILE}"
   File "/oname=SUPPORT.md" "..\SUPPORT.md"
+  File /oname=Remove-Cellwise.ps1 "${REMOVE_SCRIPT}"
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
   WriteRegStr HKCU "${APP_KEY}" "InstallDir" "$INSTDIR"
@@ -168,6 +172,11 @@ Section "Install"
   WriteRegStr HKCU "${UNINSTALL_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
   WriteRegStr HKCU "${UNINSTALL_KEY}" "Publisher" "Cellwise contributors"
   WriteRegStr HKCU "${UNINSTALL_KEY}" "UninstallString" '$\"$INSTDIR\Uninstall.exe$\"'
+  WriteRegStr HKCU "${UNINSTALL_KEY}" "DisplayIcon" '$INSTDIR\Uninstall.exe'
+  WriteRegStr HKCU "${UNINSTALL_KEY}" "HelpLink" "https://github.com/imakkushwaha555/CellWise/blob/main/SUPPORT.md"
+  CreateDirectory "$SMPROGRAMS\Cellwise"
+  CreateShortCut "$SMPROGRAMS\Cellwise\Support.lnk" "https://github.com/imakkushwaha555/CellWise/blob/main/SUPPORT.md"
+  CreateShortCut "$SMPROGRAMS\Cellwise\Uninstall Cellwise.lnk" "$INSTDIR\Uninstall.exe"
   WriteRegDWORD HKCU "${UNINSTALL_KEY}" "NoModify" 1
   Goto install_done
 
@@ -209,7 +218,11 @@ Section "Uninstall"
   Delete "$INSTDIR\Verify-Cellwise.ps1"
   Delete "$INSTDIR\NOTICE"
   Delete "$INSTDIR\SUPPORT.md"
+  Delete "$INSTDIR\Remove-Cellwise.ps1"
   Delete "$INSTDIR\Uninstall.exe"
+  Delete "$SMPROGRAMS\Cellwise\Support.lnk"
+  Delete "$SMPROGRAMS\Cellwise\Uninstall Cellwise.lnk"
+  RMDir "$SMPROGRAMS\Cellwise"
   RMDir "$INSTDIR"
   Goto uninstall_done
 
@@ -226,7 +239,11 @@ Section "Uninstall"
     Delete "$INSTDIR\Verify-Cellwise.ps1"
     Delete "$INSTDIR\NOTICE"
     Delete "$INSTDIR\SUPPORT.md"
+    Delete "$INSTDIR\Remove-Cellwise.ps1"
     Delete "$INSTDIR\Uninstall.exe"
+    Delete "$SMPROGRAMS\Cellwise\Support.lnk"
+    Delete "$SMPROGRAMS\Cellwise\Uninstall Cellwise.lnk"
+    RMDir "$SMPROGRAMS\Cellwise"
     RMDir "$INSTDIR"
 
   uninstall_done:

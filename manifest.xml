@@ -2,13 +2,13 @@
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
   <Id>e1f74c30-625a-4135-9f0a-4dd06dfb1240</Id>
   <Version>1.0.0.0</Version>
-  <ProviderName>Your Name</ProviderName>
+  <ProviderName>Cellwise contributors</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Cellwise"/>
   <Description DefaultValue="A1-style calculations for document tables. Not affiliated with or endorsed by Microsoft."/>
   <IconUrl DefaultValue="https://localhost:3000/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/icon-80.png"/>
-  <SupportUrl DefaultValue="https://github.com/OWNER/cellwise/issues"/>
+  <SupportUrl DefaultValue="https://github.com/imakkushwaha555/CellWise/issues"/>
   <Hosts>
     <Host Name="Document"/>
   </Hosts>
@@ -70,7 +70,7 @@
       </bt:Images>
       <bt:Urls>
         <bt:Url id="Page" DefaultValue="https://localhost:3000/taskpane.html"/>
-        <bt:Url id="U" DefaultValue="https://github.com/OWNER/cellwise#readme"/>
+        <bt:Url id="U" DefaultValue="https://github.com/imakkushwaha555/CellWise#readme"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="T" DefaultValue="Cellwise"/>

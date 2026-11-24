@@ -2,12 +2,12 @@
 
 Excel-style A1 formulas for tables in Microsoft Word, without helper rows or columns. Cellwise is an open-source add-in that evaluates formulas locally. **Not affiliated with or endorsed by Microsoft.**
 
-[![CI](https://github.com/OWNER/cellwise/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/cellwise/actions/workflows/ci.yml)
-[![Release](https://github.com/OWNER/cellwise/actions/workflows/release.yml/badge.svg)](https://github.com/OWNER/cellwise/releases)
+[![CI](https://github.com/imakkushwaha555/CellWise/actions/workflows/ci.yml/badge.svg)](https://github.com/imakkushwaha555/CellWise/actions/workflows/ci.yml)
+[![Release](https://github.com/imakkushwaha555/CellWise/actions/workflows/release.yml/badge.svg)](https://github.com/imakkushwaha555/CellWise/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2f2343.svg)](LICENSE)
-[![Downloads](https://img.shields.io/github/downloads/OWNER/cellwise/total)](https://github.com/OWNER/cellwise/releases)
+[![Downloads](https://img.shields.io/github/downloads/imakkushwaha555/CellWise/total)](https://github.com/imakkushwaha555/CellWise/releases)
 
-> **Repository setup pending:** replace `OWNER` in the badges and project metadata after the GitHub repository is created. No repository, Pages site, or public release exists yet.
+> **Setup status:** source code is published for review and testing. Live Word and Windows VM testing, GitHub Pages, and production release assets are pending.
 
 ## What Cellwise does
 

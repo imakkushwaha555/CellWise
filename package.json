@@ -4,12 +4,12 @@
   "description": "Excel-style A1 formulas for Microsoft Word tables. Local-only open-source add-in; no helper rows or columns. Not affiliated with or endorsed by Microsoft.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/OWNER/cellwise.git"
+    "url": "https://github.com/imakkushwaha555/CellWise.git"
   },
   "bugs": {
-    "url": "https://github.com/OWNER/cellwise/issues"
+    "url": "https://github.com/imakkushwaha555/CellWise/issues"
   },
-  "homepage": "https://github.com/OWNER/cellwise#readme",
+  "homepage": "https://github.com/imakkushwaha555/CellWise#readme",
   "keywords": [
     "word-addin",
     "office-js",
@@ -26,7 +26,7 @@
     "windows",
     "productivity"
   ],
-  "author": "Your Name (placeholder)",
+  "author": "Cellwise contributors",
   "license": "MIT",
   "private": true,
   "type": "module",

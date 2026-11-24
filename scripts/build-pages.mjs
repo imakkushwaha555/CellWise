@@ -55,6 +55,14 @@ cpSync(sourceDir, outputDir, { recursive: true });
 cpSync(join(root, "assets"), join(outputDir, "assets"), { recursive: true });
 cpSync(distDir, outputDir, { recursive: true });
 
+let manifest = readFileSync(join(root, "manifest.xml"), "utf8");
+manifest = manifest.replaceAll("https://localhost:3000", baseUrl);
+manifest = manifest.replaceAll("https://github.com/OWNER/cellwise", repositoryUrl);
+if (/https:\/\/localhost:3000|github\.com\/OWNER/.test(manifest)) {
+  throw new Error("Generated manifest still contains a placeholder URL.");
+}
+writeFileSync(join(outputDir, "manifest.xml"), manifest, "utf8");
+
 function replaceTokens(directory) {
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
     const path = join(directory, entry.name);

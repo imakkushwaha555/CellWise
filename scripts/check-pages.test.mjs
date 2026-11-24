@@ -40,4 +40,8 @@ assert.equal((sitemap.match(/<url>/g) ?? []).length, pageFiles.length, "Sitemap 
 assert.ok(readFileSync(new URL("style.css", siteDir), "utf8").includes("@media"), "The site stylesheet must include a mobile layout.");
 assert.ok(readFileSync(new URL("assets/formula-example.svg", root), "utf8").includes("Illustration only"), "The formula visual must be labeled as an illustration.");
 
+const sourceManifest = readFileSync(new URL("manifest.xml", root), "utf8");
+assert.ok(sourceManifest.includes("https://localhost:3000"), "The source manifest should retain localhost URLs for local development.");
+assert.ok(!sourceManifest.includes("github.com/OWNER"), "The source manifest must not contain OWNER placeholders.");
+
 console.log("Pages metadata checks passed.");

@@ -38,6 +38,8 @@ Unicode true
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 OutFile "${OUTPUT_FILE}"
+Icon "..\assets\cellwise.ico"
+UninstallIcon "..\assets\cellwise.ico"
 VIProductVersion "${PRODUCT_VERSION_NUMERIC}"
 VIAddVersionKey "ProductName" "${PRODUCT_NAME}"
 VIAddVersionKey "FileVersion" "${PRODUCT_VERSION}"
@@ -80,7 +82,7 @@ FunctionEnd
 Function CatalogPageCreate
   nsDialogs::Create 1018
   Pop $0
-  ${NSD_CreateLabel} 0 0 100% 36u "Enter an existing UNC network share where the add-in manifest can be stored. The manifest contains the public HTTPS add-in URL. The share must be accessible and writable; this installer does not create shares or change firewall settings."
+  ${NSD_CreateLabel} 0 0 100% 48u "Step 1: Share a folder in Windows.\r\nStep 2: Enter its UNC path, for example \\SERVER-PC\\CellwiseCatalog.\r\nDo not enter C:\\Users\\... or a mapped drive. The share must allow read and write access."
   Pop $0
   ${NSD_CreateText} 0 44u 100% 12u ""
   Pop $CatalogInput
@@ -137,6 +139,7 @@ Section "Install"
   SetOutPath "$INSTDIR"
   File /oname=Verify-Cellwise.ps1 "${VERIFY_SCRIPT}"
   File /oname=NOTICE "${NOTICE_FILE}"
+  File "/oname=SUPPORT.md" "..\SUPPORT.md"
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
   WriteRegStr HKCU "${APP_KEY}" "InstallDir" "$INSTDIR"
@@ -202,6 +205,7 @@ Section "Uninstall"
   DeleteRegKey /ifempty HKCU "${APP_KEY}"
   Delete "$INSTDIR\Verify-Cellwise.ps1"
   Delete "$INSTDIR\NOTICE"
+  Delete "$INSTDIR\SUPPORT.md"
   Delete "$INSTDIR\Uninstall.exe"
   RMDir "$INSTDIR"
   Goto uninstall_done
@@ -218,6 +222,7 @@ Section "Uninstall"
     DeleteRegKey /ifempty HKCU "${APP_KEY}"
     Delete "$INSTDIR\Verify-Cellwise.ps1"
     Delete "$INSTDIR\NOTICE"
+    Delete "$INSTDIR\SUPPORT.md"
     Delete "$INSTDIR\Uninstall.exe"
     RMDir "$INSTDIR"
 

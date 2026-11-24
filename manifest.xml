@@ -8,7 +8,7 @@
   <Description DefaultValue="A1-style calculations for document tables. Not affiliated with or endorsed by Microsoft."/>
   <IconUrl DefaultValue="https://localhost:3000/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/icon-80.png"/>
-  <SupportUrl DefaultValue="https://github.com/imakkushwaha555/CellWise/issues"/>
+  <SupportUrl DefaultValue="https://github.com/imakkushwaha555/CellWise/blob/main/SUPPORT.md"/>
   <Hosts>
     <Host Name="Document"/>
   </Hosts>
@@ -70,7 +70,7 @@
       </bt:Images>
       <bt:Urls>
         <bt:Url id="Page" DefaultValue="https://localhost:3000/taskpane.html"/>
-        <bt:Url id="U" DefaultValue="https://github.com/imakkushwaha555/CellWise#readme"/>
+        <bt:Url id="U" DefaultValue="https://github.com/imakkushwaha555/CellWise/blob/main/SUPPORT.md"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="T" DefaultValue="Cellwise"/>

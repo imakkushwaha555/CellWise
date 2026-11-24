@@ -105,7 +105,7 @@ Yes. Microsoft's [Word formula-field reference](https://learn.microsoft.com/en-u
 - [Troubleshooting and tests](TESTING.md)
 - [Installer test plan](INSTALLER_TESTING.md)
 
-The documentation site is prepared for GitHub Pages but is not published. See [site build and verification](site/README.md).
+The documentation and add-in site is hosted through GitHub Pages. See [site build and verification](site/README.md).
 
 ## Project status
 
@@ -113,11 +113,11 @@ The formula engine, mock Word client tests, packaging prototype, and release wor
 
 ## Roadmap
 
-The immediate roadmap is live Word validation, a clean Windows VM install/uninstall test, and finding a supported production installation path. See the [roadmap issue draft](community/ROADMAP_ISSUE.md); no public roadmap issue exists yet.
+The immediate roadmap is live Word validation, a clean Windows VM install/uninstall test, code signing, and a supported production installation route.
 
 ## Contributing and support
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a change. Bug reports and feature ideas can use the repository's issue templates after the repository is created. Until maintainers configure a private vulnerability-reporting contact, do not post security-sensitive details in a public issue; see [SECURITY.md](SECURITY.md).
+For installation, UNC catalog setup, Word troubleshooting, and uninstall steps, read [SUPPORT.md](SUPPORT.md). Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a change. Bug reports and feature ideas can use the repository's issue templates. Until maintainers configure a private vulnerability-reporting contact, do not post security-sensitive details in a public issue; see [SECURITY.md](SECURITY.md).
 
 ## License and disclaimer
 

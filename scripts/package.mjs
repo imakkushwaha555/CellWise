@@ -77,6 +77,7 @@ const generatedManifestPath = join(stagingDir, "manifest.xml");
 writeFileSync(generatedManifestPath, manifest, "utf8");
 writeFileSync(join(stagingDir, "LICENSE"), readFileSync(join(root, "LICENSE")));
 writeFileSync(join(stagingDir, "NOTICE"), readFileSync(join(root, "NOTICE")));
+writeFileSync(join(stagingDir, "SUPPORT.md"), readFileSync(join(root, "SUPPORT.md")));
 execSync(`npx office-addin-manifest validate "${generatedManifestPath}"`, {
   cwd: root,
   stdio: "inherit",

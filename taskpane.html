@@ -7,14 +7,13 @@
  body{font-family:Segoe UI,sans-serif;margin:12px;font-size:14px}
  input{width:100%;box-sizing:border-box;padding:6px;margin:6px 0}
  button{padding:6px 10px;margin-right:6px}
- #addr{font-weight:600} #guides{display:flex;gap:6px;margin:8px 0;font-size:12px} .guide{padding:3px 7px;background:#e6e6e6;color:#444;border-radius:2px} #status{margin-top:10px} .err{color:#b00020}
+ #addr{font-weight:600} #status{margin-top:10px} .err{color:#b00020}
  small{color:#666}
  details{margin-top:14px} summary{cursor:pointer;font-weight:600}
 </style></head>
 <body>
  <h1>Cellwise</h1>
- <div>Selected range: <span id="addr">—</span></div>
- <div id="guides" aria-live="polite"><span id="column-guide" class="guide" hidden></span><span id="row-guide" class="guide" hidden></span></div>
+ <div>Cell: <span id="addr">—</span></div>
  <input id="formula" placeholder="=SUM(B2:B5)  or  =C2*D2">
  <button id="apply">Apply</button><button id="recalc">Recalculate table</button>
  <div id="status"></div>

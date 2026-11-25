@@ -1,6 +1,6 @@
 /// <reference types="office-js" />
 
-import { evaluate, addressOf, indexToCol, rangeAddress } from "./formula";
+import { evaluate, addressOf } from "./formula";
 import {
   computeCell,
   formatResult,
@@ -123,9 +123,6 @@ export async function recalcTable(ctx: Word.RequestContext) {
 Office.onReady(() => {
   ($("apply") as HTMLButtonElement).onclick = () => run(applyFormula);
   ($("recalc") as HTMLButtonElement).onclick = () => run(recalcTable);
-  ($("formula") as HTMLInputElement).addEventListener("input", () => {
-    autoRangeAddress = null;
-  });
   Office.context.document.addHandlerAsync(Office.EventType.DocumentSelectionChanged, () => {
     if (lastSelectionTimer) clearTimeout(lastSelectionTimer);
     lastSelectionTimer = setTimeout(() => run(showSelection), DEBOUNCE_MS);
@@ -133,100 +130,13 @@ Office.onReady(() => {
   run(showSelection);
 });
 
-let autoRangeAddress: string | null = null;
-
-function clearSelectionDisplay() {
-  $("addr").textContent = "—";
-  for (const id of ["column-guide", "row-guide"]) {
-    const indicator = $(id);
-    indicator.textContent = "";
-    indicator.hidden = true;
-  }
-  const formula = $("formula") as HTMLInputElement;
-  if (autoRangeAddress && formula.value === autoRangeAddress) formula.value = "";
-  autoRangeAddress = null;
-}
-
 async function showSelection(ctx: Word.RequestContext) {
   const selection = ctx.document.getSelection();
   const cell = selection.parentTableCellOrNullObject;
-  const table = selection.parentTableOrNullObject;
   cell.load("isNullObject,rowIndex,cellIndex");
-  table.load("isNullObject");
   await ctx.sync();
 
-  if (table.isNullObject) {
-    clearSelectionDisplay();
-    return;
-  }
-
-  const selectionRange = selection.getRange("Whole");
-  const rows = table.rows;
-  rows.load("items");
-  await ctx.sync();
-
-  const rowCells: Word.TableCellCollection[] = [];
-  for (const row of rows.items) {
-    const cells = row.cells;
-    cells.load("items");
-    rowCells.push(cells);
-  }
-  await ctx.sync();
-
-  const comparisons: Array<{ relation: OfficeExtension.ClientResult<Word.LocationRelation>; cell: Word.TableCell }> = [];
-  for (const cells of rowCells) {
-    for (const tableCell of cells.items) {
-      tableCell.load("rowIndex,cellIndex");
-      const relation = selectionRange.compareLocationWith(tableCell.body.getRange("Whole"));
-      comparisons.push({ relation, cell: tableCell });
-    }
-  }
-
-  await ctx.sync();
-  const selected: Array<{ row: number; col: number }> = [];
-  for (const comparison of comparisons) {
-    const relation = comparison.relation.value as string;
-    if (["Overlaps", "Contains", "Inside", "Equal"].includes(relation)) {
-      selected.push({ row: comparison.cell.rowIndex, col: comparison.cell.cellIndex });
-    }
-  }
-
-  if (selected.length === 0 && !cell.isNullObject) {
-    selected.push({ row: cell.rowIndex, col: cell.cellIndex });
-  }
-  if (selected.length === 0) {
-    clearSelectionDisplay();
-    return;
-  }
-
-  const rowIndexes = selected.map((item) => item.row);
-  const colIndexes = selected.map((item) => item.col);
-  const firstRow = Math.min(...rowIndexes);
-  const lastRow = Math.max(...rowIndexes);
-  const firstCol = Math.min(...colIndexes);
-  const lastCol = Math.max(...colIndexes);
-  const range = rangeAddress(firstRow, firstCol, lastRow, lastCol);
-
-  $("addr").textContent = range;
-  const columnGuide = $("column-guide");
-  columnGuide.textContent = firstCol === lastCol
-    ? `Column ${indexToCol(firstCol)}`
-    : `Columns ${indexToCol(firstCol)}-${indexToCol(lastCol)}`;
-  columnGuide.hidden = false;
-  const rowGuide = $("row-guide");
-  rowGuide.textContent = firstRow === lastRow
-    ? `Row ${firstRow + 1}`
-    : `Rows ${firstRow + 1}-${lastRow + 1}`;
-  rowGuide.hidden = false;
-
-  const formula = $("formula") as HTMLInputElement;
-  if (selected.length > 1) {
-    if (formula.value.trim() === "" || formula.value === autoRangeAddress) {
-      formula.value = range;
-      autoRangeAddress = range;
-    }
-  } else if (autoRangeAddress && formula.value === autoRangeAddress) {
-    formula.value = "";
-    autoRangeAddress = null;
-  }
+  $("addr").textContent = cell.isNullObject
+    ? "—"
+    : addressOf(cell.rowIndex, cell.cellIndex);
 }

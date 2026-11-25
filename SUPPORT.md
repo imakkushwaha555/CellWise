@@ -2,71 +2,68 @@
 
 ## Supported scope
 
-Cellwise is a testing-only Microsoft Word add-in. Live Word and clean-Windows-VM validation is still pending. The installer uses an Office shared-folder trusted catalog, not a production Microsoft-supported installer route.
+Cellwise is an open-source Word add-in for A1-style formulas in document tables. It runs in Word desktop and Word on the web. Live Word validation across all Word versions is still pending.
 
 ## Installation
 
-1. Download the Cellwise installer from the final GitHub release.
-2. Create and share your own folder on your Windows PC. The folder name and UNC computer/share path must belong to your system; do not use a previously copied example or a local `C:\...` path.
-3. Right-click the folder, choose **Properties**, open **Sharing**, and share it so the folder is available on the network.
-4. Run the installer. On the **Cellwise catalog** page, enter the UNC path shown by Windows Sharing. Enter a path you created and own, for example `\\DESKTOP-NAME\CellwiseCatalog`, not `C:\Users\...`.
-5. Close every Word window and reopen Word 2021.
-6. Open a document. Select **Home > Add-ins > Advanced**. In the **Office Add-ins** dialog, select **SHARED FOLDER** at the top, select **Cellwise**, and choose **Add**.
+1. Download `Cellwise-1.0.0.zip` from the GitHub release.
+2. Extract it to a folder you own.
+3. Open Word.
+4. Choose **Insert > My Add-ins > Upload My Add-in**.
+5. Select `manifest.xml` from the extracted folder.
+6. Choose **Add** or **Trust**.
+7. The Cellwise task pane should appear on the right side of Word.
 
-If **Home > Add-ins** is missing, try **Insert > Add-ins > My Add-ins**. Availability varies by Word 2021 build and Microsoft 365/volume-license configuration.
+If **Insert > My Add-ins** is not available, try **Home > Add-ins > Advanced > Upload My Add-in**. Availability varies by Word build and organization policy.
 
-You can also register the folder manually: open **File > Options > Trust Center > Trust Center Settings > Trusted Add-in Catalogs**, enter the UNC path in **Catalog Url**, choose **Add catalog**, enable **Show in Menu**, choose **OK**, and reopen Word.
+## Using Cellwise
 
-Office requires UNC shared-folder catalog paths. A local `C:\...` path is not valid for the trusted catalog registry.
+1. Place your cursor inside any cell of a Word table.
+2. The task pane shows the active cell address, for example `A1`.
+3. Enter a formula beginning with `=`, for example `=SUM(B2:B5)` or `=A1+B1`.
+4. Choose **Apply**.
+5. Choose **Recalculate table** after changing input values.
 
-## Windows security warning
+The first cell of each table is `A1`. Columns increase left to right: `A`, `B`, `C`, ..., `Z`, `AA`, `AB`, and so on. Rows increase top to bottom: `1`, `2`, `3`, and so on.
 
-The installer is currently unsigned. If Windows SmartScreen reports that it prevented the application, do not bypass policies silently. Check the SHA-256 checksum in `SHA256SUMS.txt` and confirm the installer came from the official GitHub release.
+## Supported formulas
+
+| Function | Example |
+|----------|---------|
+| SUM | `=SUM(B2:B5)` |
+| AVERAGE | `=AVERAGE(A1:A4)` |
+| MIN | `=MIN(B1:B3)` |
+| MAX | `=MAX(B1:B3)` |
+| COUNT | `=COUNT(A1:A3)` |
+| ABS | `=ABS(-15)` |
+| ROUND | `=ROUND(10/3,2)` |
+
+Operators: `+`, `-`, `*`, `/`, `^`, `%`
+
+## Remove Cellwise
+
+1. Open Word.
+2. Choose **Insert > My Add-ins > My Add-ins**.
+3. Select Cellwise and choose **Remove**.
+4. Close and reopen Word.
 
 ## Troubleshooting
 
-### The installer reports an invalid share
+| Symptom | Likely cause | Fix |
+|---------|--------------|-----|
+| Task pane does not open | Manifest not uploaded correctly | Re-upload `manifest.xml` via **Insert > My Add-ins > Upload My Add-in** |
+| "Place the cursor inside a table cell." | Selection not inside a table cell | Click inside a Word table cell |
+| Formula has no effect | Content-control tag conflict | Clear cell content, then re-apply formula |
+| Task pane does not load | Add-in host policy or network issue | Check that `taskpane.html` opens in your browser; check Word add-in policies with your administrator |
 
-- The path must start with `\\`.
-- The computer name must be reachable from Word.
-- The account running Word must have read and write access.
-- Test the UNC path in File Explorer before rerunning the installer.
-- Do not enter a OneDrive folder, mapped drive, HTTP URL, or local `C:\` path.
+## Privacy
 
-### Cellwise is missing in Word
-
-- Close every Word window and reopen Word.
-- Confirm the trusted catalog entry under `HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\WEF\TrustedCatalogs`.
-- Run the verification script from an installed copy:
-
-```powershell
-& "$env:LOCALAPPDATA\Programs\Cellwise\Verify-Cellwise.ps1"
-```
-
-### Remove or reinstall Cellwise
-
-Use **Windows Settings > Apps > Installed apps > Cellwise** and choose **Uninstall**. The Start menu can also provide **Support** and **Uninstall Cellwise** entries.
-
-To remove only the add-in registration without using the uninstaller, run:
-
-```powershell
-& "$env:LOCALAPPDATA\Programs\Cellwise\Remove-Cellwise.ps1"
-```
-
-Close all Word windows before removing or reinstalling. Reopen Word, open **Home > Add-ins > Advanced**, and verify that **SHARED FOLDER** no longer lists Cellwise.
-
-### The task pane does not load
-
-- Check that this URL opens in a browser: https://imakkushwaha555.github.io/CellWise/taskpane.html
-- Check Word's add-in and privacy policies with your administrator.
-- Clear cached Office add-ins only after documenting the existing registration.
-
-## Range selection
-
-Select a rectangular block of table cells. Cellwise shows the selected A1 range in the side panel, for example `B2:D4`, and fills an empty formula bar with `=SUM(B2:D4)`. It also shows the selected columns and rows as grey guide text inside the task pane. These guides are not inserted into the Word document and cannot appear in printed or PDF output.
+Cellwise reads table values through the Office.js host API and evaluates formulas locally in the add-in. It contains no telemetry and does not send document contents to Cellwise. The add-in files are downloaded from the configured HTTPS host; Office.js is loaded from Microsoft’s official Office.js URL.
 
 ## Report a problem
 
 Open an issue: https://github.com/imakkushwaha555/CellWise/issues
 
-Include the Word version, Windows version, installer checksum, whether the UNC share is reachable, and redacted screenshots. Never attach documents or personal data.
+Include your Word version, operating system, and a description of the problem. Never attach documents or personal data.
+
+Not affiliated with or endorsed by Microsoft.

@@ -6,8 +6,8 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Cellwise"/>
   <Description DefaultValue="A1-style calculations for document tables. Not affiliated with or endorsed by Microsoft."/>
-  <IconUrl DefaultValue="https://imakkushwaha555.github.io/CellWise/icon-32.png"/>
-  <HighResolutionIconUrl DefaultValue="https://imakkushwaha555.github.io/CellWise/icon-80.png"/>
+  <IconUrl DefaultValue="https://localhost:3000/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://localhost:3000/icon-80.png"/>
   <SupportUrl DefaultValue="https://github.com/imakkushwaha555/CellWise/blob/main/SUPPORT.md"/>
   <Hosts>
     <Host Name="Document"/>
@@ -18,7 +18,7 @@
     </Sets>
   </Requirements>
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://imakkushwaha555.github.io/CellWise/taskpane.html"/>
+    <SourceLocation DefaultValue="https://localhost:3000/taskpane.html"/>
   </DefaultSettings>
   <Permissions>ReadWriteDocument</Permissions>
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
@@ -64,9 +64,9 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="I16" DefaultValue="https://imakkushwaha555.github.io/CellWise/icon-16.png"/>
-        <bt:Image id="I32" DefaultValue="https://imakkushwaha555.github.io/CellWise/icon-32.png"/>
-        <bt:Image id="I80" DefaultValue="https://imakkushwaha555.github.io/CellWise/icon-80.png"/>
+        <bt:Image id="I16" DefaultValue="https://localhost:3000/icon-16.png"/>
+        <bt:Image id="I32" DefaultValue="https://localhost:3000/icon-32.png"/>
+        <bt:Image id="I80" DefaultValue="https://localhost:3000/icon-80.png"/>
       </bt:Images>
       <bt:Urls>
         <bt:Url id="Page" DefaultValue="https://imakkushwaha555.github.io/CellWise/taskpane.html"/>

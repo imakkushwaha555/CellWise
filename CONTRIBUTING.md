@@ -29,4 +29,12 @@ Keep changes focused. Describe the user-visible change, list tests actually run,
 
 All contributions are provided under the repository's MIT License. By submitting a contribution, you confirm that you have the right to submit it under that license.
 
+## Credits and Attribution
+
+If you add new features or modify existing code, please:
+
+- Add your name and a brief description of your contribution to the `CREDITS.md` file (create it if it does not exist).
+- Do not remove or alter existing contributor credits.
+- If you incorporate third-party code, document its source, license, and any required attribution in `CREDITS.md` and update `NOTICE` if needed.
+
 Not affiliated with or endorsed by Microsoft.

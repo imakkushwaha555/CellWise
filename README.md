@@ -7,7 +7,7 @@ Excel-style A1 formulas for tables in Microsoft Word, without helper rows or col
 [![License: MIT](https://img.shields.io/badge/license-MIT-2f2343.svg)](LICENSE)
 [![Downloads](https://img.shields.io/github/downloads/imakkushwaha555/CellWise/total)](https://github.com/imakkushwaha555/CellWise/releases)
 
-> **Setup status:** source code is published for review and testing. Live Word and Windows VM testing, GitHub Pages, and production release assets are pending.
+> **Setup status:** Release v1.0.0 is available on GitHub. Download `Cellwise-1.0.0.zip` for self-service installation. Live Word and Windows VM testing is still pending.
 
 ## What Cellwise does
 
